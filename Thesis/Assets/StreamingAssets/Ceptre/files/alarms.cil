@@ -1,0 +1,46 @@
+% Coding up alarms
+
+nat : type.
+z : nat.
+s : nat -> nat.
+
+add2 : nat -> nat = \!x. s (s !x).
+add3 : nat -> nat = \!x. s (s (s !x)).
+twice : (nat -> nat) -> nat -> nat = \!f.\!x.f !(f !x).
+add4 : nat -> nat = twice !add2.
+add8 : nat -> nat = twice !add4.
+add16 : nat -> nat = twice !add8.
+
+
+tick : type.
+time : nat -> type.
+
+phase Factory (in : nat -> type, out : type) = {
+
+  item : type.
+  widget : item.
+  gadget : item.
+
+  productionTime : item -> nat -> type.
+
+  made : item -> type.
+
+  state : type.
+  on : nat -> state.
+  off : state.
+  alarm : item -> state -> type.
+
+  alarmGoOff : in T * alarm W (on T) -o {made W * alarm W off}.
+  startWProd : in T * alarm widget off
+                  -o {alarm widget (on (add2 !T))}.
+  startGProd : in T * alarm gadget off
+                  -o {alarm gadget (on (add3 !T))}.
+
+} {alarm widget off * alarm gadget off} {out}. % ???
+
+process Clock (in : type, out : nat -> type) = {
+  advance : in * time T -o {time (s T)}.
+  stop : time (add16 !(add16 !z)) -o {1}.
+} {time z} {time T -o out T}. % ???
+
+#trace * {Factory(time, tick), Clock(tick, time)}.

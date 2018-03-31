@@ -1,0 +1,148 @@
+%% resourcy social game example.
+%% turn-based "sims."
+
+sim : type.
+
+%% sim needs
+% XXX doing anything with these?
+fed : sim -> type.
+fun : sim -> type.
+social : sim -> type.
+awake : sim -> type.
+clean : sim -> type.
+
+%% sim stats: age, job, relationships, etc
+age : type.
+infant : age.
+toddler : age.
+preteen : age.
+adult : age.
+senior : age.
+is_age : sim -> age -> type.
+dead : sim -> type.
+
+job : type.
+unemployed : job.
+artist : job.
+politician : job.
+scientist : job.
+has_job : sim -> job -> type.
+available_job : job -> type.
+- : available_job artist.
+- : available_job politician.
+- : available_job scientist.
+
+rel : type.
+sibling : rel.
+spouse : rel.
+friend : rel.
+stranger : rel.
+acquaintaince : rel.
+dating : rel.
+partner : rel.
+goodfriend : rel.
+bestfriend : rel.
+enemy : rel.
+nemesis : rel.
+in_rel : sim -> sim -> rel -> type.
+
+%% global stats
+nat : type.
+z : nat.
+s : nat -> nat.
+simoleons : nat -> type.
+nsims : nat -> type.
+sim_id : sim -> nat -> type.
+
+% how much each job makes per turn.
+earns : job -> nat -> type.
+- : earns artist (s (s z)).
+- : earns politician (s (s (s (s (s (s z)))))).
+- : earns scientist (s (s (s (s z)))).
+
+%% actions
+
+creation_token : type.
+
+%% seed relationships
+seed_rels : sim -> nat -> type.
+seed/z : seed_rels S z -o {1}.
+seed/cons : seed_rels S (s N) * sim_id S' N
+                -o {seed_rels S N * @in_rel S S' stranger}.
+
+create
+: creation_token * nsims N -o 
+  {@nsims (s N) * 
+    Exists ss:sim. 
+      @is_age ss adult * 
+      @sim_id ss N *
+      @has_job ss unemployed *
+      seed_rels S N}.
+
+assign_job
+: has_job S unemployed * available_job J -o {@has_job S J}.
+
+% have birthday
+birthday1
+: is_age S infant -o {@is_age S toddler}.
+
+birthday2
+: is_age S toddler -o {@is_age S preteen}.
+
+birthday3
+: is_age S preteen -o {@is_age S adult}.
+
+birthday4
+: is_age S adult * has_job S _ -o {@is_age S senior}.
+
+die
+: is_age S senior * nsims (s N) -o {!dead S * @nsims N }.
+
+% work
+plus : nat -> nat -> nat -> type.
+plus/z : plus z N N.
+plus/s : plus (s N) M (s P)
+          <- plus N M P.
+work
+: has_job S J * earns J N * simoleons K * plus N K M
+    -o {@has_job S J * @simoleons M}.
+
+% eat
+% sleep
+% dance
+% coffee
+
+% interact (nice)
+be_nice
+: in_rel S S' stranger -o {@in_rel S S' friend}.
+
+% interact (mean)
+
+% interact (romantic)
+flirt
+: in_rel S S' stranger -o {@in_rel S S' friend}.
+ask_out
+: in_rel S S' friend -o {@in_rel S S' dating}.
+get_serious
+: in_rel S S' dating -o {@in_rel S S' partner}.
+
+% get married
+get_married
+: in_rel S S' partner
+  -o {@in_rel S S' spouse * @social S * @social S'}.
+
+% have baby
+have_baby
+: is_age S1 adult * is_age S2 adult * in_rel S1 S2 spouse
+    * nsims N
+  -o {@is_age S1 adult * @is_age S2 adult * @in_rel S1 S2 spouse
+      * Exists ss. @is_age ss infant * !sim_id ss N * @nsims (s N)}.
+
+%% initial configuration
+init : type.
+- : init -o
+{@nsims z * @simoleons z *
+    creation_token * creation_token * creation_token }.
+
+#trace * {init}.
+#query * * * 1 init -o {1}.

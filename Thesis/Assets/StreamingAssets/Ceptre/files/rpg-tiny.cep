@@ -1,0 +1,34 @@
+
+treasure : pred.
+stamina : pred.
+damage : pred.
+skill : pred.
+alive : pred.
+
+fighting : pred.
+turn : pred.
+
+stage do = {
+  train : turn * stamina * $alive -o skill.
+  fight : turn * $alive -o fighting.
+  heal : turn * $alive * damage -o stamina.
+  rest : turn * $alive -o stamina.
+  buy_weapon : turn * treasure * treasure * treasure * $alive -o skill.
+}
+#interactive do.
+process-action : qui * stage do -o stage happen.
+
+stage happen = {
+  turn -o ().
+  fight/hit : fighting * stamina * $skill -o treasure.
+  fight/miss : fighting * stamina -o damage.
+  fight/weak : fighting -o damage * damage.
+  die : damage * damage * damage * alive -o ().
+}
+#interactive happen.
+do-action : qui * stage happen * $alive -o stage do * turn.
+
+context init = { stamina, stamina, stamina, alive, turn}.
+
+#trace _ do init.
+

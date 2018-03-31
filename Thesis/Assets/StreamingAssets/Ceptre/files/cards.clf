@@ -1,0 +1,93 @@
+%% A cardgame template.
+
+nat : type.
+z : nat.
+s : nat -> nat.
+four : nat = s (s (s (s z))).
+eight : nat = s (s (s (s four))).
+twelve : nat = s (s (s (s (eight)))).
+
+rank : type.
+r2 : rank.
+r3 : rank.
+r4 : rank.
+r5 : rank.
+r6 : rank.
+r7 : rank.
+r8 : rank.
+r9 : rank.
+r10 : rank.
+jack : rank.
+queen : rank.
+king : rank.
+ace : rank.
+
+nat-rank : nat -> rank -> type.
+- : nat-rank z r2.
+- : nat-rank (s z) r3.
+- : nat-rank (s (s z)) r4.
+- : nat-rank (s (s (s z))) r5.
+- : nat-rank four r6.
+- : nat-rank (s four) r7.
+- : nat-rank (s (s four)) r8.
+- : nat-rank (s (s (s four))) r9.
+- : nat-rank eight r10.
+- : nat-rank (s eight) jack.
+- : nat-rank (s (s eight)) queen.
+- : nat-rank (s (s (s eight))) king.
+- : nat-rank twelve ace.
+
+face : rank -> type.
+face/jack : face jack.
+face/queen : face queen.
+face/king : face king.
+face/ace : face ace. % ?.
+
+suit : type.
+hearts : suit.
+clubs : suit.
+diamonds : suit.
+spades : suit.
+
+card : type.
+c : rank -> suit -> card.
+
+indeck : card -> type.
+gen : nat -> type.
+deal_phase : type.
+
+generate : gen (s N) * nat-rank N R -o 
+              {indeck (c R hearts) *
+               indeck (c R clubs) *
+               indeck (c R diamonds) *
+               indeck (c R spades) *
+               gen N}.
+
+gen-to-deal : gen z -o {deal_phase}.
+
+init_deck : type =
+{ gen (s twelve) }.
+
+% #trace * init_deck.
+
+player : type.
+p1 : player.
+p2 : player.
+next : player -> player -> type.
+- : next p1 p2.
+- : next p2 p1.
+
+cardloc : type.
+top : cardloc.
+bottom : cardloc.
+u : card -> cardloc. % unique location of a card.
+hand : player -> cardloc -> cardloc -> type.
+needscard : player -> type.
+
+deal : deal_phase * needscard P * hand P L bottom * indeck C * next P P' 
+           -o {hand P L (u C) * hand P (u C) bottom * needscard P' * deal_phase}.
+
+init : type = {init_deck 
+           * needscard p1 * hand p1 top bottom * hand p2 top bottom}.
+
+#trace * init.

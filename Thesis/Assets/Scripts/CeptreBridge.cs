@@ -12,23 +12,32 @@ public class CeptreBridge : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-            StartCeptre();
+            StartCeptre("hello-world.cep");
     }
 
-    private void StartCeptre()
+    private void StartCeptre(string ceptreFile)
     {
-        // Create the path to the executable from the relative path and the executable name
-        string path = Path.GetFullPath(@"..\Thesis\Assets\StreamingAssets\") + "ExeSimulator.exe";
+        // Append the ceptre extension if it wasn't present in the passed filename
+        string ceptreExtension = ".cep";
+        if (!ceptreFile.EndsWith(ceptreExtension))
+            ceptreFile += ceptreExtension;
+
+        // Specify path names
+        string ceptreFolder = "Ceptre";
+        string ceptreFilesFolder = "files";
+        //string executableName = "ExeSimulator.exe";
+        string executableName = "ceptre.exe";
 
         // Specify the process
         Process ceptreProcess = new Process
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = path,
-                Arguments = "Julian 125",
+                FileName = string.Format("{0}/{1}/{2}", Application.streamingAssetsPath, ceptreFolder, executableName),
+                Arguments = string.Format("{0}/{1}/{2}/{3}", Application.streamingAssetsPath, ceptreFolder, ceptreFilesFolder, ceptreFile),
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 CreateNoWindow = true
             }
         };
@@ -45,16 +54,17 @@ public class CeptreBridge : MonoBehaviour
         }
 
         // Read the output from the process
+        string output = "";
         while (!ceptreProcess.StandardOutput.EndOfStream)
         {
             // Read the line from the program
-            string line = ceptreProcess.StandardOutput.ReadLine() + '\n';
-
-            // Update the text box
-            testText.text += line;
-
-            // Print the line
-            print(line);
+            output += ceptreProcess.StandardOutput.ReadLine() + '\n';
         }
+
+        // Update the text box
+        testText.text = output;
+
+        // Print the output
+        print(output);
     }
 }

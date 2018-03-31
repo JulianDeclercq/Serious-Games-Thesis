@@ -1,0 +1,9 @@
+--- STEP:    rule 
+    REMOVED: {a}
+    ADDED:   {b}
+--- STEP:    rule 
+    REMOVED: {a}
+    ADDED:   {b}
+--- STEP:    rule 
+    REMOVED: {a}
+    ADDED:   {b}
