@@ -12,7 +12,10 @@ public class CeptreBridge : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-            StartCeptre("hello-world.cep");
+        {
+            //StartCeptre("hello-world");
+            StartCeptre("hello-world-interactive");
+        }
     }
 
     private void StartCeptre(string ceptreFile)
@@ -25,7 +28,6 @@ public class CeptreBridge : MonoBehaviour
         // Specify path names
         string ceptreFolder = "Ceptre";
         string ceptreFilesFolder = "files";
-        //string executableName = "ExeSimulator.exe";
         string executableName = "ceptre.exe";
 
         // Specify the process
@@ -37,28 +39,44 @@ public class CeptreBridge : MonoBehaviour
                 Arguments = string.Format("{0}/{1}/{2}/{3}", Application.streamingAssetsPath, ceptreFolder, ceptreFilesFolder, ceptreFile),
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                RedirectStandardInput = true,
                 RedirectStandardError = true,
                 CreateNoWindow = true
             }
         };
 
         // Start the process
-        try
-        {
-            ceptreProcess.Start();
-        }
-        catch (Exception e)
-        {
-            print("Error: " + e.Message);
-            return;
-        }
+        ceptreProcess.Start();
 
         // Read the output from the process
         string output = "";
+
+        // Read until the end of the stream (== end of Ceptre process)
         while (!ceptreProcess.StandardOutput.EndOfStream)
         {
+            // For formatting purposes
+            bool providedInput = false;
+
+            // Peek for a question mark. If a question mark is provided in the Ceptre output, input is expected
+            int peek = ceptreProcess.StandardOutput.Peek();
+            if ((char)peek == '?')
+            {
+                // Input choice one
+                string choice = "1";
+                ceptreProcess.StandardInput.WriteLine(choice);
+
+                // Toggle bool
+                providedInput = true;
+            }
+
             // Read the line from the program
-            output += ceptreProcess.StandardOutput.ReadLine() + '\n';
+            string line = ceptreProcess.StandardOutput.ReadLine();
+
+            // Add endlines for formatting (add one extra if input has been provided to match the original ceptre from the console)
+            line += (providedInput) ? "\n\n" : "\n";
+
+            // Add the line to the output, print choice if it is not empty
+            output += line;
         }
 
         // Update the text box
