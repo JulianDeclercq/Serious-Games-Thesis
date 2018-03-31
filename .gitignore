@@ -34,3 +34,5 @@ sysinfo.txt
 *.unitypackage
 
 Thesis/Library/
+
+Thesis/Temp/UnityVS_bin/Debug/

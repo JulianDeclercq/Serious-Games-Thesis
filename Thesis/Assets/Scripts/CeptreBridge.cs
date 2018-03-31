@@ -17,7 +17,7 @@ public class CeptreBridge : MonoBehaviour
 
     private void StartCeptre()
     {
-        // Create the path to the executable
+        // Create the path to the executable from the relative path and the executable name
         string path = Path.GetFullPath(@"..\Thesis\Assets\StreamingAssets\") + "ExeSimulator.exe";
 
         // Specify the process
@@ -26,7 +26,7 @@ public class CeptreBridge : MonoBehaviour
             StartInfo = new ProcessStartInfo
             {
                 FileName = path,
-                Arguments = "",
+                Arguments = "Julian 125",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 CreateNoWindow = true
@@ -46,6 +46,15 @@ public class CeptreBridge : MonoBehaviour
 
         // Read the output from the process
         while (!ceptreProcess.StandardOutput.EndOfStream)
-            testText.text += ceptreProcess.StandardOutput.ReadLine() + '\n';
+        {
+            // Read the line from the program
+            string line = ceptreProcess.StandardOutput.ReadLine() + '\n';
+
+            // Update the text box
+            testText.text += line;
+
+            // Print the line
+            print(line);
+        }
     }
 }
