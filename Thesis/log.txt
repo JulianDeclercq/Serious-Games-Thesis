@@ -1,9 +1,15 @@
---- STEP:    rule 
-    REMOVED: {a}
-    ADDED:   {b}
---- STEP:    rule 
-    REMOVED: {a}
-    ADDED:   {b}
---- STEP:    rule 
-    REMOVED: {a}
-    ADDED:   {b}
+--- STEP:    remove 7
+    REMOVED: {(things 8)}
+    ADDED:   {(things 7)}
+--- STEP:    remove 6
+    REMOVED: {(things 7)}
+    ADDED:   {(things 6)}
+--- STEP:    remove 5
+    REMOVED: {(things 6)}
+    ADDED:   {(things 5)}
+--- STEP:    remove 4
+    REMOVED: {(things 5)}
+    ADDED:   {(things 4)}
+--- STEP:    four 
+    REMOVED: {(things 4)}
+    ADDED:   {four_things}

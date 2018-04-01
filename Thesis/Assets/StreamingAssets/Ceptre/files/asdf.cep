@@ -1,0 +1,53 @@
+% Type declarations
+character : type.
+location : type.
+object : type.
+weapon : object.
+
+% Predicate declarations
+a : pred.
+b : pred.
+
+at character location : pred.
+likes character character : pred.
+anger character character : pred.
+has character object : pred.
+depressed character : pred.
+dead character : pred.
+
+% Character declarations
+romeo: character. montague: character. capulet: character.
+mercutio: character. nurse: character. juliet: character.
+tybalt: character. apothecary: character.
+
+town: location. mon_house: location. cap_house: location.
+
+% Context declarations
+context shakespeare 
+  { at romeo town, at montague mon_house, at capulet cap_house, 
+    at mercutio town, at nurse cap_house, at juliet town,
+    at tybalt town, at apothecary town, 
+
+    anger montague capulet, anger capulet montague,
+    anger tybalt romeo, anger capulet romeo, anger montague tybalt,
+ 
+    likes mercutio romeo, likes romeo mercutio, 
+    likes montague romeo, likes capulet juliet,
+    likes juliet nurse, likes nurse juliet,
+
+    has tybalt weapon, has romeo weapon, has apothecary weapon }
+
+% Stage declarations
+stage main = {
+	compliment : $at C L * $at C' L * $likes C C' -o likes C' C.
+
+	murder
+	: anger C C' * anger C C' * anger C C' * anger C C' *
+	  $at C L * at C' L * $has C weapon
+	                -o !dead C'.
+
+	mourn : $at C L * likes C C' * dead C' -o depressed C * depressed C.
+}
+
+% Run the program with stage main and context shakespeare
+#trace 5 main shakespeare.

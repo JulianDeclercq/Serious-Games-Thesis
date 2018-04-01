@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Diagnostics;
@@ -7,6 +8,7 @@ using System.IO;
 public class CeptreBridge : MonoBehaviour
 {
     public Text testText;
+    public GameObject testObj;
 
     // Update is called once per frame
     private void Update()
@@ -14,8 +16,24 @@ public class CeptreBridge : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             //StartCeptre("hello-world");
-            StartCeptre("hello-world-interactive");
+            StartCeptre("numbers.cep");
+            //StartCeptre("hello-world-interactive");
+
+            //StartCoroutine(GenerateTexture());
         }
+    }
+
+    /// <summary>
+    /// Generates a graph from the last Ceptre output and puts it as texture
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator GenerateTexture()
+    {
+        // Wait for the graph generation to finish
+        yield return StartCoroutine(GraphLoader.GenerateGraph("graph"));
+
+        // Update the texture
+        testObj.GetComponent<Renderer>().material.mainTexture = GraphLoader.LoadPNG(string.Format("{0}/graph.png", Application.streamingAssetsPath));
     }
 
     private void StartCeptre(string ceptreFile)
@@ -35,6 +53,7 @@ public class CeptreBridge : MonoBehaviour
         {
             StartInfo = new ProcessStartInfo
             {
+                Verb = "runas", // run as administrator
                 FileName = string.Format("{0}/{1}/{2}", Application.streamingAssetsPath, ceptreFolder, executableName),
                 Arguments = string.Format("{0}/{1}/{2}/{3}", Application.streamingAssetsPath, ceptreFolder, ceptreFilesFolder, ceptreFile),
                 UseShellExecute = false,
@@ -78,6 +97,9 @@ public class CeptreBridge : MonoBehaviour
             // Add the line to the output, print choice if it is not empty
             output += line;
         }
+
+        if (ceptreProcess.HasExited)
+            print("Ceptre finished running.");
 
         // Update the text box
         testText.text = output;
