@@ -10,18 +10,31 @@ public class CeptreBridge : MonoBehaviour
     public Text testText;
     public GameObject testObj;
 
-    // Update is called once per frame
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            //StartCeptre("hello-world");
-            StartCeptre("numbers.cep");
-            //StartCeptre("hello-world-interactive");
+        // Copy all files from the streaming assets to the persistent data path
+        var streamingAssets = new DirectoryInfo(Application.streamingAssetsPath);
+        var persistentDataPath = new DirectoryInfo(Application.persistentDataPath);
 
-            //StartCoroutine(GenerateTexture());
-        }
+        CopyFilesRecursively(streamingAssets, persistentDataPath);
+
+        //   StartCeptre("numbers.cep");
+        StartCeptre("hello-world.cep");
     }
+
+    // Update is called once per frame
+    /*
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                //StartCeptre("hello-world");
+                //StartCeptre("numbers.cep");
+                //StartCeptre("hello-world-interactive");
+                StartTestProcess("ExeSimulator.exe");
+                //StartCoroutine(GenerateTexture());
+            }
+        }*/
 
     /// <summary>
     /// Generates a graph from the last Ceptre output and puts it as texture
@@ -43,31 +56,36 @@ public class CeptreBridge : MonoBehaviour
         if (!ceptreFile.EndsWith(ceptreExtension))
             ceptreFile += ceptreExtension;
 
-        // Specify path names
-        string ceptreFolder = "Ceptre";
-        string ceptreFilesFolder = "files";
-        string executableName = "ceptre.exe";
-
         // Specify the process
-        Process ceptreProcess = new Process
+        //string ceptrePath = @"..\..\Ceptre";
+        string ceptrePath = string.Format("{0}/Ceptre", Application.persistentDataPath);
+        string ceptreFolder = "files";
+
+        Process process = new Process
         {
             StartInfo = new ProcessStartInfo
             {
                 Verb = "runas", // run as administrator
-                FileName = string.Format("{0}/{1}/{2}", Application.streamingAssetsPath, ceptreFolder, executableName),
-                Arguments = string.Format("{0}/{1}/{2}/{3}", Application.streamingAssetsPath, ceptreFolder, ceptreFilesFolder, ceptreFile),
+                FileName = string.Format(@"{0}\ceptre.exe", ceptrePath),
+                //Arguments = string.Format(@"{0}\{1}\{2}", ceptrePath, ceptreFolder, ceptreFile),
+                Arguments = string.Format(@"{0}\{1}", /*ceptrePath,*/ ceptreFolder, ceptreFile),
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 RedirectStandardError = true,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = ceptrePath  // When UseShellExecute is false, gets or sets the working directory FOR the process to be started.
+                                               // When UseShellExecute is true, gets or sets the directory that CONTAINS the process to be started.
             }
         };
 
         // Start the process
-        ceptreProcess.Start();
+        process.Start();
 
-        // Read the output from the process
+        // Print all program output
+        Console.WriteLine(process.StandardOutput.ReadToEnd());
+
+        /*// Read the output from the process
         string output = "";
 
         // Read until the end of the stream (== end of Ceptre process)
@@ -102,9 +120,19 @@ public class CeptreBridge : MonoBehaviour
             print("Ceptre finished running.");
 
         // Update the text box
-        testText.text = output;
+        //testText.text = output;
 
         // Print the output
-        print(output);
+        print(output);*/
+    }
+
+    private void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
+    {
+        foreach (DirectoryInfo dir in source.GetDirectories())
+            CopyFilesRecursively(dir, target.CreateSubdirectory(dir.Name));
+
+        // TODO: Fix overwrite by doing a check to see if it exist and dont copy if it exists
+        foreach (FileInfo file in source.GetFiles())
+            file.CopyTo(Path.Combine(target.FullName, file.Name), true);
     }
 }

@@ -1,4 +1,4 @@
-{"command": {"rulename": "four", "args": []},
- "removed": [{"varname": "x5", "mode": "lin", "pred": "things", "args": ["4"]}],
- "added": [{"varname": "x6", "mode": "lin", "pred": "four_things", "args": []}]
+{"command": {"rulename": "remove", "args": ["0"]},
+ "removed": [{"varname": "x8", "mode": "lin", "pred": "things", "args": ["1"]}],
+ "added": [{"varname": "x9", "mode": "lin", "pred": "things", "args": ["0"]}]
 }

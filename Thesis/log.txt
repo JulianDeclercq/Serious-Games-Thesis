@@ -10,6 +10,15 @@
 --- STEP:    remove 4
     REMOVED: {(things 5)}
     ADDED:   {(things 4)}
---- STEP:    four 
+--- STEP:    remove 3
     REMOVED: {(things 4)}
-    ADDED:   {four_things}
+    ADDED:   {(things 3)}
+--- STEP:    remove 2
+    REMOVED: {(things 3)}
+    ADDED:   {(things 2)}
+--- STEP:    remove 1
+    REMOVED: {(things 2)}
+    ADDED:   {(things 1)}
+--- STEP:    remove 0
+    REMOVED: {(things 1)}
+    ADDED:   {(things 0)}
