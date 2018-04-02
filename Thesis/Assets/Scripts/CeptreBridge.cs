@@ -17,24 +17,17 @@ public class CeptreBridge : MonoBehaviour
         var persistentDataPath = new DirectoryInfo(Application.persistentDataPath);
 
         CopyFilesRecursively(streamingAssets, persistentDataPath);
-
-        //   StartCeptre("numbers.cep");
-        StartCeptre("hello-world.cep");
     }
 
     // Update is called once per frame
-    /*
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                //StartCeptre("hello-world");
-                //StartCeptre("numbers.cep");
-                //StartCeptre("hello-world-interactive");
-                StartTestProcess("ExeSimulator.exe");
-                //StartCoroutine(GenerateTexture());
-            }
-        }*/
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+            StartCeptre("hello-world.cep");
+
+        if (Input.GetKeyDown(KeyCode.J))
+            StartCeptre("numbers.cep");
+    }
 
     /// <summary>
     /// Generates a graph from the last Ceptre output and puts it as texture
