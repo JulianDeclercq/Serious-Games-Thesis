@@ -42,7 +42,7 @@ public class CeptreBridge : MonoBehaviour
         testObj.GetComponent<Renderer>().material.mainTexture = GraphLoader.LoadPNG(string.Format("{0}/graph.png", Application.streamingAssetsPath));
     }
 
-    private void StartCeptre(string ceptreFile)
+    private void StartCeptre(string ceptreFile, string ceptreFolder = "files")
     {
         // Append the ceptre extension if it wasn't present in the passed filename
         string ceptreExtension = ".cep";
@@ -50,9 +50,7 @@ public class CeptreBridge : MonoBehaviour
             ceptreFile += ceptreExtension;
 
         // Specify the process
-        //string ceptrePath = @"..\..\Ceptre";
         string ceptrePath = string.Format("{0}/Ceptre", Application.persistentDataPath);
-        string ceptreFolder = "files";
 
         Process process = new Process
         {
