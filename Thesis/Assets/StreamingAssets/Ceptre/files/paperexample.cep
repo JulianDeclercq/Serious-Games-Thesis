@@ -25,10 +25,15 @@ do/murder
 do/mourn : $at C L * likes C C' * dead C' -o depressed C * depressed C.
 
 % Context declarations
-context shakespeare_characters =
-  { romeo: character, montague: character, capulet: character,
-    mercutio: character, nurse: character, juliet: character,
-    tybalt: character, apothecary: character }
+romeo: character.
+montague: character.
+capulet: character.
+mercutio: character.
+nurse: character.
+juliet: character.
+tybalt: character.
+apothecary: character.
+
 
 stage main = {
   rule : a -o b.

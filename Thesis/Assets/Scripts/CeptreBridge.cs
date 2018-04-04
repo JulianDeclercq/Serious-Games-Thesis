@@ -19,14 +19,8 @@ public class CeptreBridge : MonoBehaviour
         CopyFilesRecursively(streamingAssets, persistentDataPath);
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            StartCeptre("hello-world.cep");
-
-        if (Input.GetKeyDown(KeyCode.J))
-            StartCeptre("numbers.cep");
     }
 
     /// <summary>
@@ -52,7 +46,7 @@ public class CeptreBridge : MonoBehaviour
         // Specify the process
         string ceptrePath = string.Format("{0}/Ceptre", Application.persistentDataPath);
 
-        Process process = new Process
+        Process ceptreProcess = new Process
         {
             StartInfo = new ProcessStartInfo
             {
@@ -71,12 +65,9 @@ public class CeptreBridge : MonoBehaviour
         };
 
         // Start the process
-        process.Start();
+        ceptreProcess.Start();
 
-        // Print all program output
-        Console.WriteLine(process.StandardOutput.ReadToEnd());
-
-        /*// Read the output from the process
+        // Read the output from the process
         string output = "";
 
         // Read until the end of the stream (== end of Ceptre process)
@@ -114,7 +105,7 @@ public class CeptreBridge : MonoBehaviour
         //testText.text = output;
 
         // Print the output
-        print(output);*/
+        print(output);
     }
 
     private void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
@@ -122,7 +113,7 @@ public class CeptreBridge : MonoBehaviour
         foreach (DirectoryInfo dir in source.GetDirectories())
             CopyFilesRecursively(dir, target.CreateSubdirectory(dir.Name));
 
-        // TODO: Fix overwrite by doing a check to see if it exist and dont copy if it exists
+        // TODO: Fix overwrite by doing a check to see if it exist and don't copy if it exists
         foreach (FileInfo file in source.GetFiles())
             file.CopyTo(Path.Combine(target.FullName, file.Name), true);
     }
