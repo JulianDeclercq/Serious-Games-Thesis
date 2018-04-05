@@ -21,6 +21,8 @@ public class CeptreBridge : MonoBehaviour
 
     private void Start()
     {
+        //StartCeptre("helloWorldGenerated", "generatedFiles");
+        StartCoroutine(GenerateTexture());
     }
 
     /// <summary>
@@ -33,7 +35,7 @@ public class CeptreBridge : MonoBehaviour
         yield return StartCoroutine(GraphLoader.GenerateGraph("graph"));
 
         // Update the texture
-        testObj.GetComponent<Renderer>().material.mainTexture = GraphLoader.LoadPNG(string.Format("{0}/graph.png", Application.streamingAssetsPath));
+        testObj.GetComponent<Renderer>().material.mainTexture = GraphLoader.LoadPNG(string.Format("{0}/graph.png", Application.persistentDataPath));
     }
 
     private void StartCeptre(string ceptreFile, string ceptreFolder = "files")
@@ -102,7 +104,7 @@ public class CeptreBridge : MonoBehaviour
             print("Ceptre finished running.");
 
         // Update the text box
-        //testText.text = output;
+        testText.text = output;
 
         // Print the output
         print(output);

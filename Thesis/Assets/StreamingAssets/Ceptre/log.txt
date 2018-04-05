@@ -1,9 +1,18 @@
---- STEP:    rule 
-    REMOVED: {a}
-    ADDED:   {b}
---- STEP:    rule 
-    REMOVED: {a}
-    ADDED:   {b}
---- STEP:    rule 
-    REMOVED: {a}
-    ADDED:   {b}
+--- STEP:    build_brick 
+    REMOVED: {bricks, pig}
+    ADDED:   {brickhouse}
+--- STEP:    build_stick 
+    REMOVED: {sticks, pig}
+    ADDED:   {stickhouse}
+--- STEP:    build_straw 
+    REMOVED: {straw, pig}
+    ADDED:   {strawhouse}
+--- STEP:    blow_straw 
+    REMOVED: {strawhouse, wolf}
+    ADDED:   {wolf}
+--- STEP:    blow_stick 
+    REMOVED: {wolf, stickhouse}
+    ADDED:   {wolf}
+--- STEP:    blow_brick 
+    REMOVED: {wolf, brickhouse}
+    ADDED:   {brickhouse}

@@ -86,6 +86,12 @@ public class CeptreWriter : MonoBehaviour
         // Create a streamwriter for the file to be written
         using (StreamWriter streamWriter = new StreamWriter(path))
         {
+            // Write comment that this is a generated file
+            streamWriter.WriteLine("File generated. Visit https://github.com/JulianDeclercq/Serious-Games-Thesis for source code on the generation.");
+
+            // Readability
+            streamWriter.WriteLine("");
+
             // Write all types
             foreach (Type type in _types)
                 streamWriter.WriteLine("{0} : type.", type);
@@ -93,6 +99,10 @@ public class CeptreWriter : MonoBehaviour
             // Readability
             if (_types.Any())
                 streamWriter.WriteLine("");
+
+            // Write all objects
+            foreach (string obj in _objects)
+                streamWriter.WriteLine("{0} : object.", obj);
 
             // Write all predicates
             foreach (Predicate predicate in _predicates)

@@ -46,13 +46,15 @@ public class GraphLoader
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = string.Format("{0}/{1}/{2}", Application.streamingAssetsPath, folder, executableName),
-                Arguments = string.Format("-Tpng {0}/Ceptre/trace.dot -o {0}/{1}.png", Application.streamingAssetsPath, fileName),
+                FileName = string.Format("{0}/{1}/{2}", Application.persistentDataPath, folder, executableName),
+                //Arguments = string.Format("-Tpng {0}/Ceptre/trace.dot -o {0}/{1}.png", Application.persistentDataPath, fileName),
+                Arguments = string.Format("-Tpng Ceptre/trace.dot -o {0}.png", fileName),
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 RedirectStandardError = true,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = Application.persistentDataPath
             }
         };
 
