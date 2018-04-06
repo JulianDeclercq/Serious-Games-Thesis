@@ -13,7 +13,17 @@ namespace Thesis
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WordNetForm());
+
+            // Create the forms
+            WordNetForm _wordNetForm = new WordNetForm();
+            CeptreForm _ceptreForm = new CeptreForm();
+
+            // Set the references
+            _wordNetForm.SetCeptreFormReference(_ceptreForm);
+            _ceptreForm.SetWordNetFormReference(_wordNetForm);
+
+            // Run the ceptreform
+            Application.Run(_ceptreForm);
         }
     }
 }

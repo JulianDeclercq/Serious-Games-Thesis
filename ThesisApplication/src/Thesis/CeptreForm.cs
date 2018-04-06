@@ -9,15 +9,16 @@ using LAIR.Collections.Generic;
 
 namespace Thesis
 {
-    public partial class TestForm : Form
+    public partial class CeptreForm : Form
     {
         private WordNetEngine _wordNetEngine;
         private SynSet _semSimSs1;
         private SynSet _semSimSs2;
         private string _origSsLbl;
         private WordNetSimilarityModel _semanticSimilarityModel;
+        private WordNetForm _wordNetForm;
 
-        public TestForm()
+        public CeptreForm()
         {
             InitializeComponent();
 
@@ -43,12 +44,14 @@ namespace Thesis
             _semanticSimilarityModel = new WordNetSimilarityModel(_wordNetEngine);
         }
 
+        public void SetWordNetFormReference(WordNetForm reference)
+        {
+            _wordNetForm = reference;
+        }
+
         private void getSynSets_Click(object sender, EventArgs e)
         {
             synSets.Items.Clear();
-            semanticRelations.Items.Clear();
-            lexicalRelations.Items.Clear();
-            getRelatedSynSets.Enabled = false;
 
             // retrieve synsets
             Set<SynSet> synSetsToShow = null;
@@ -88,69 +91,6 @@ namespace Thesis
                     synSets.Items.Add(synSet);
             else
                 MessageBox.Show("No synsets found");
-        }
-
-        private void synSets_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            semanticRelations.Items.Clear();
-            lexicalRelations.Items.Clear();
-            computeSemSim.Enabled = false;
-            getRelatedSynSets.Enabled = synSets.SelectedItem != null;
-
-            // select a synset if none is selected and there is one
-            if (synSets.SelectedItems.Count == 0)
-            {
-                if (synSets.Items.Count > 0)
-                    synSets.SelectedIndex = 0;
-            }
-            else if (synSets.SelectedItems.Count == 1)
-            {
-                SynSet selectedSynSet = synSets.SelectedItem as SynSet;
-
-                // populate semantic relation list for the current synset
-                semanticRelations.Items.Clear();
-                foreach (WordNetEngine.SynSetRelation synSetRelation in selectedSynSet.SemanticRelations)
-                    semanticRelations.Items.Add(synSetRelation + ":  " + selectedSynSet.GetRelatedSynSetCount(synSetRelation));
-
-                // populate list of lexically related words for the current synset
-                lexicalRelations.Items.Clear();
-                Dictionary<WordNetEngine.SynSetRelation, Dictionary<string, Set<string>>> lexicallyRelatedWords = selectedSynSet.GetLexicallyRelatedWords();
-                foreach (WordNetEngine.SynSetRelation lexicalRelation in lexicallyRelatedWords.Keys)
-                    foreach (string word1 in lexicallyRelatedWords[lexicalRelation].Keys)
-                        foreach (string word2 in lexicallyRelatedWords[lexicalRelation][word1])
-                            lexicalRelations.Items.Add(word1 + " -- " + lexicalRelation + " --> " + word2);
-
-                // show id
-                synsetID.Text = selectedSynSet.ID;
-            }
-        }
-
-        private void getRelatedSynSets_Click(object sender, EventArgs e)
-        {
-            SynSet selectedSynSet = synSets.SelectedItem as SynSet;
-
-            if (selectedSynSet == null || semanticRelations.SelectedIndex == -1)
-                return;
-
-            synSets.Items.Clear();
-
-            // get relations
-            string relationStr = semanticRelations.SelectedItem.ToString();
-            relationStr = relationStr.Split(':')[0].Trim();
-            WordNetEngine.SynSetRelation relation = (WordNetEngine.SynSetRelation)Enum.Parse(typeof(WordNetEngine.SynSetRelation), relationStr);
-
-            // add related synset
-            foreach (SynSet relatedSynset in selectedSynSet.GetRelatedSynSets(relation, false))
-                synSets.Items.Add(relatedSynset);
-
-            // selected synset
-            if (synSets.Items.Count > 0)
-                synSets.SelectedIndex = 0;
-        }
-
-        private void synSetRelations_DoubleClick(object sender, EventArgs e)
-        {
-            getRelatedSynSets_Click(sender, e);
         }
 
         private void word_KeyDown(object sender, KeyEventArgs e)
@@ -281,6 +221,12 @@ namespace Thesis
             ss2.Text = _origSsLbl;
             _semSimSs2 = null;
             computeSemSim.Enabled = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            _wordNetForm.Show();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Thesis
         private SynSet _semSimSs2;
         private string _origSsLbl;
         private WordNetSimilarityModel _semanticSimilarityModel;
+        private CeptreForm _ceptreForm;
 
         public WordNetForm()
         {
@@ -40,6 +41,11 @@ namespace Thesis
             _semSimSs1 = _semSimSs2 = null;
             _origSsLbl = ss1.Text;
             _semanticSimilarityModel = new WordNetSimilarityModel(_wordNetEngine);
+        }
+
+        public void SetCeptreFormReference(CeptreForm reference)
+        {
+            _ceptreForm = reference;
         }
 
         private void getSynSets_Click(object sender, EventArgs e)
@@ -280,6 +286,12 @@ namespace Thesis
             ss2.Text = _origSsLbl;
             _semSimSs2 = null;
             computeSemSim.Enabled = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            _ceptreForm.ShowDialog();
         }
     }
 }
