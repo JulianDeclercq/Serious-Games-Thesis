@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Thesis
@@ -18,12 +19,14 @@ namespace Thesis
             WordNetForm _wordNetForm = new WordNetForm();
             CeptreForm _ceptreForm = new CeptreForm();
 
-            // Set the references
-            _wordNetForm.SetCeptreFormReference(_ceptreForm);
-            _ceptreForm.SetWordNetFormReference(_wordNetForm);
-
             // Run the ceptreform
-            Application.Run(_ceptreForm);
+            List<UserControl> userControls = new List<UserControl>() { _ceptreForm, _wordNetForm };
+            DisplayForm displayForm = new DisplayForm(userControls);
+
+            // Set the references so the usercontrols can be switched from inside them
+            _ceptreForm.SetDisplayFormReference(displayForm);
+
+            Application.Run(displayForm);
         }
     }
 }

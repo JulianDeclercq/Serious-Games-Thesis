@@ -8,14 +8,13 @@ using LAIR.ResourceAPIs.WordNet;
 
 namespace Thesis
 {
-    public partial class WordNetForm : Form
+    public partial class WordNetForm : UserControl
     {
         private WordNetEngine _wordNetEngine;
         private SynSet _semSimSs1;
         private SynSet _semSimSs2;
         private string _origSsLbl;
         private WordNetSimilarityModel _semanticSimilarityModel;
-        private CeptreForm _ceptreForm;
 
         public WordNetForm()
         {
@@ -41,11 +40,6 @@ namespace Thesis
             _semSimSs1 = _semSimSs2 = null;
             _origSsLbl = ss1.Text;
             _semanticSimilarityModel = new WordNetSimilarityModel(_wordNetEngine);
-        }
-
-        public void SetCeptreFormReference(CeptreForm reference)
-        {
-            _ceptreForm = reference;
         }
 
         private void getSynSets_Click(object sender, EventArgs e)
@@ -209,11 +203,6 @@ namespace Thesis
             t.Start();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void word_TextChanged(object sender, EventArgs e)
         {
             synsetID.TextChanged -= new EventHandler(synsetID_TextChanged);
@@ -286,12 +275,6 @@ namespace Thesis
             ss2.Text = _origSsLbl;
             _semSimSs2 = null;
             computeSemSim.Enabled = false;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            _ceptreForm.ShowDialog();
         }
     }
 }
