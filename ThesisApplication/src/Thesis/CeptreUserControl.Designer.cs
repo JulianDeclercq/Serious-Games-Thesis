@@ -1,6 +1,6 @@
 ﻿namespace Thesis
 {
-    partial class WordNetForm
+    partial class CeptreUserControl
     {
         /// <summary>
         /// Required designer variable.
@@ -33,8 +33,6 @@
             this.test = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.synSets = new System.Windows.Forms.ListBox();
-            this.getRelatedSynSets = new System.Windows.Forms.Button();
-            this.semanticRelations = new System.Windows.Forms.ListBox();
             this.pos = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -46,15 +44,14 @@
             this.wordNetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lexicalRelations = new System.Windows.Forms.ListBox();
             this.computeSemSim = new System.Windows.Forms.Button();
             this.ss1 = new System.Windows.Forms.Label();
             this.ss2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,36 +116,7 @@
             this.synSets.Name = "synSets";
             this.synSets.Size = new System.Drawing.Size(964, 204);
             this.synSets.TabIndex = 4;
-            this.synSets.SelectedIndexChanged += new System.EventHandler(this.synSets_SelectedIndexChanged);
             this.synSets.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.synSets_MouseDoubleClick);
-            // 
-            // getRelatedSynSets
-            // 
-            this.getRelatedSynSets.Enabled = false;
-            this.getRelatedSynSets.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.getRelatedSynSets.Location = new System.Drawing.Point(20, 40);
-            this.getRelatedSynSets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.getRelatedSynSets.Name = "getRelatedSynSets";
-            this.getRelatedSynSets.Size = new System.Drawing.Size(168, 35);
-            this.getRelatedSynSets.TabIndex = 0;
-            this.getRelatedSynSets.Text = "Get related synsets";
-            this.getRelatedSynSets.UseVisualStyleBackColor = true;
-            this.getRelatedSynSets.Click += new System.EventHandler(this.getRelatedSynSets_Click);
-            // 
-            // semanticRelations
-            // 
-            this.semanticRelations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.semanticRelations.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.semanticRelations.FormattingEnabled = true;
-            this.semanticRelations.ItemHeight = 20;
-            this.semanticRelations.Location = new System.Drawing.Point(20, 83);
-            this.semanticRelations.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.semanticRelations.Name = "semanticRelations";
-            this.semanticRelations.Size = new System.Drawing.Size(334, 204);
-            this.semanticRelations.TabIndex = 1;
-            this.semanticRelations.DoubleClick += new System.EventHandler(this.synSetRelations_DoubleClick);
             // 
             // pos
             // 
@@ -237,8 +205,7 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.semanticRelations);
-            this.groupBox2.Controls.Add(this.getRelatedSynSets);
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(1035, 66);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -274,11 +241,11 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 30);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.lexicalRelations);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(1036, 411);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -288,21 +255,6 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Lexical relations";
-            // 
-            // lexicalRelations
-            // 
-            this.lexicalRelations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lexicalRelations.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lexicalRelations.FormattingEnabled = true;
-            this.lexicalRelations.HorizontalScrollbar = true;
-            this.lexicalRelations.ItemHeight = 20;
-            this.lexicalRelations.Location = new System.Drawing.Point(18, 38);
-            this.lexicalRelations.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.lexicalRelations.Name = "lexicalRelations";
-            this.lexicalRelations.Size = new System.Drawing.Size(334, 124);
-            this.lexicalRelations.TabIndex = 1;
             // 
             // computeSemSim
             // 
@@ -358,7 +310,17 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Semantic similarity";
             // 
-            // WordNetForm
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(8, 46);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(361, 39);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // CeptreForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -370,14 +332,13 @@
             this.Controls.Add(this.menuStrip1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MinimumSize = new System.Drawing.Size(1430, 724);
-            this.Name = "WordNetForm";
+            this.Name = "CeptreForm";
             this.Size = new System.Drawing.Size(1430, 724);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
@@ -392,8 +353,6 @@
         private System.Windows.Forms.Button test;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox synSets;
-        private System.Windows.Forms.Button getRelatedSynSets;
-        private System.Windows.Forms.ListBox semanticRelations;
         private System.Windows.Forms.ComboBox pos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -405,11 +364,11 @@
         private System.Windows.Forms.TextBox synsetID;
         private System.Windows.Forms.CheckBox mostCommon;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListBox lexicalRelations;
         private System.Windows.Forms.Button computeSemSim;
         private System.Windows.Forms.Label ss2;
         private System.Windows.Forms.Label ss1;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button1;
     }
 }
 

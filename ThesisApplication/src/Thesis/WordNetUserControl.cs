@@ -8,7 +8,7 @@ using LAIR.ResourceAPIs.WordNet;
 
 namespace Thesis
 {
-    public partial class WordNetForm : UserControl
+    public partial class WordNetUserControl : UserControl
     {
         private WordNetEngine _wordNetEngine;
         private SynSet _semSimSs1;
@@ -16,7 +16,7 @@ namespace Thesis
         private string _origSsLbl;
         private WordNetSimilarityModel _semanticSimilarityModel;
 
-        public WordNetForm()
+        public WordNetUserControl()
         {
             InitializeComponent();
 

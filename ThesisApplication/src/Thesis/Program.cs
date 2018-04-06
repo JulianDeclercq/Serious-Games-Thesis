@@ -16,8 +16,8 @@ namespace Thesis
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Create the forms
-            WordNetForm _wordNetForm = new WordNetForm();
-            CeptreForm _ceptreForm = new CeptreForm();
+            WordNetUserControl _wordNetForm = new WordNetUserControl();
+            CeptreUserControl _ceptreForm = new CeptreUserControl();
 
             // Run the ceptreform
             List<UserControl> userControls = new List<UserControl>() { _ceptreForm, _wordNetForm };

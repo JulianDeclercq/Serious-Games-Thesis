@@ -9,7 +9,7 @@ using LAIR.Collections.Generic;
 
 namespace Thesis
 {
-    public partial class CeptreForm : UserControl
+    public partial class CeptreUserControl : UserControl
     {
         private WordNetEngine _wordNetEngine;
         private SynSet _semSimSs1;
@@ -18,7 +18,7 @@ namespace Thesis
         private WordNetSimilarityModel _semanticSimilarityModel;
         private DisplayForm _displayForm;
 
-        public CeptreForm()
+        public CeptreUserControl()
         {
             InitializeComponent();
 
