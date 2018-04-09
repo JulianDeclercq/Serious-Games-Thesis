@@ -1,0 +1,42 @@
+--- STEP:    wander_in_woods woodcutter spawn
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter woods)}
+--- STEP:    gets_lost woodcutter
+    REMOVED: {(at woodcutter woods)}
+    ADDED:   {}
+--- STEP:    spawn_cabin wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf cabin)}
+--- STEP:    visit woods mom mom_house
+    REMOVED: {(house mom mom_house), (at redhood woods)}
+    ADDED:   {houseToken, (at redhood mom_house), (visit redhood mom)}
+--- STEP:    visit mom_house granny granny_house
+    REMOVED: {(at redhood mom_house), (house granny granny_house)}
+    ADDED:   {houseToken, (at redhood granny_house), (visit redhood granny)}
+--- STEP:    wander_in_woods wolf cabin
+    REMOVED: {(at wolf cabin)}
+    ADDED:   {(at wolf woods)}
+--- STEP:    wander_in_woods wolf woods
+    REMOVED: {(at wolf woods)}
+    ADDED:   {(at wolf woods)}
+--- STEP:    wander_in_woods wolf woods
+    REMOVED: {(at wolf woods)}
+    ADDED:   {(at wolf woods)}
+--- STEP:    gets_lost wolf
+    REMOVED: {(at wolf woods)}
+    ADDED:   {}
+--- STEP:    wander_in_woods redhood granny_house
+    REMOVED: {(at redhood granny_house)}
+    ADDED:   {(at redhood woods)}
+--- STEP:    gets_lost redhood
+    REMOVED: {(at redhood woods)}
+    ADDED:   {}
+--- STEP:    `anon2 
+    REMOVED: {qui, houseToken, (stage mainStage)}
+    ADDED:   {(stage houseStage)}
+--- STEP:    mom_house 
+    REMOVED: {(visit redhood mom)}
+    ADDED:   {livedHappilyEverAfter}
+--- STEP:    scream 
+    REMOVED: {(visit redhood granny)}
+    ADDED:   {scream}

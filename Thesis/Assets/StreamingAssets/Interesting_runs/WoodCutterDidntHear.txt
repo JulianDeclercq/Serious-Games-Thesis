@@ -1,18 +1,21 @@
 --- STEP:    spawn_cabin woodcutter
     REMOVED: {(at woodcutter spawn)}
     ADDED:   {(at woodcutter cabin)}
+--- STEP:    spawn_cabin wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf cabin)}
 --- STEP:    `anon0 
     REMOVED: {qui, (stage spawnStage)}
     ADDED:   {(stage mainStage)}
---- STEP:    gets_lost wolf
-    REMOVED: {hasntVisited, (at wolf woods)}
-    ADDED:   {hasntVisited}
---- STEP:    wander_in_woods redhood
-    REMOVED: {hasntVisited, (at redhood woods)}
-    ADDED:   {(at redhood woods), hasntVisited}
 --- STEP:    visit woods granny granny_house
-    REMOVED: {(at redhood woods), hasntVisited, (house granny granny_house)}
+    REMOVED: {hasntVisited, (house granny granny_house), (at redhood woods)}
     ADDED:   {houseToken, (at redhood granny_house), (visit redhood granny)}
 --- STEP:    `anon3 
     REMOVED: {qui, houseToken, (stage mainStage)}
     ADDED:   {(stage houseStage)}
+--- STEP:    scream 
+    REMOVED: {(visit redhood granny)}
+    ADDED:   {scream}
+--- STEP:    woodcutterNotalerted 
+    REMOVED: {scream, (at woodcutter cabin)}
+    ADDED:   {(dead redhood)}

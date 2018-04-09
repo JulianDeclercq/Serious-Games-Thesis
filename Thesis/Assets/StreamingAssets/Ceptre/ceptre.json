@@ -1,4 +1,4 @@
-{"command": {"rulename": "blow_brick", "args": []},
- "removed": [{"varname": "x12", "mode": "lin", "pred": "wolf", "args": []}, {"varname": "x8", "mode": "lin", "pred": "brickhouse", "args": []}],
- "added": [{"varname": "x13", "mode": "lin", "pred": "brickhouse", "args": []}]
+{"command": {"rulename": "`anon3", "args": []},
+ "removed": [{"varname": "x16", "mode": "lin", "pred": "qui", "args": []}, {"varname": "x15", "mode": "lin", "pred": "houseToken", "args": []}, {"varname": "x9", "mode": "lin", "pred": "stage", "args": ["mainStage"]}],
+ "added": [{"varname": "x17", "mode": "lin", "pred": "stage", "args": ["houseStage"]}]
 }

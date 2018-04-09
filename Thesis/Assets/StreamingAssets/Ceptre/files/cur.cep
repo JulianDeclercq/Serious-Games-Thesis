@@ -1,0 +1,103 @@
+% Types
+character : type.
+location : type.
+
+% Predicates
+house character location 			: pred.
+at character location 				: pred. 
+visit character character 			: pred.
+meet character character 			: pred.
+dead character 						: pred.
+fightToken character location		: pred.
+
+houseToken 							: pred.
+livedHappilyEverAfter 				: pred.
+endstageToken						: pred.
+runAway								: pred.
+scream								: pred.
+interrogate							: pred.
+hasntVisited						: pred.
+
+% Characters
+redhood 	: character.
+mom  		: character.
+granny	 	: character.
+wolf		: character.
+woodcutter  : character.
+
+% Locations
+spawn : location.
+woods : location.
+cabin : location.
+granny_house : location.
+mom_house : location.
+
+% Stages
+stage spawnStage = {
+	% Spawn at a random location
+	spawn_woods : at C spawn -o at C woods.
+	spawn_cabin : at C spawn -o at C cabin.
+}
+
+stage mainStage = {
+	% If the wolf meets redhood, he knows she is heading for grannies house
+	wolfEncounter : $hasntVisited * at wolf woods * $at redhood woods -o at wolf granny_house.
+
+	% From any location, redhood can visit any characters house
+	visit : hasntVisited * at redhood L * house C L' -o visit redhood C * at redhood L' * houseToken.
+
+	% If the wolf is in the woods, he has the possibility to eat anyone that is also in the woods
+	% eat : $at wolf woods * at C woods -o dead C.
+
+	% fightWolf : at C woods * at wolf woods -o fightToken C woods.
+
+	% Possibility to get lost in the woods
+	gets_lost : $hasntVisited * at C woods -o.
+	
+	% Possibility to wander around in the woods
+	wander_in_woods : $hasntVisited * at C woods -o at C woods.
+
+
+	% woodcutter_kills_wolf : $at woodcutter woods * at wolf woods -o.
+}
+%#interactive mainStage.
+
+stage fightStage = {
+	wolf_wins :			fightToken C L -o at wolf L * dead C.
+	character_wins :  	fightToken C L -o at C L * dead wolf.
+}
+
+stage houseStage = {
+	% Consume the visit token and live happily ever after, no danger from the wolf
+	mom_house : 		visit redhood mom -o livedHappilyEverAfter.
+	
+	% Consume the visit token and scream
+	scream :	 		visit redhood granny * at wolf granny_house -o scream.
+
+	% Consume the visit token and redhoods location, run away to the woods
+	runAway :			visit redhood granny * at wolf granny_house * at redhood L -o at redhood woods.
+
+	%interrogate : 		visit redhood granny * at wolf granny_house -o interrogate.
+	
+	% Woodcutter heard scream
+	woodcutterAlerted : scream * at woodcutter woods -o at woodcutter granny_house * fightToken woodcutter granny_house.
+
+	% Woodcutter didn't hear scream, because he was in the cabin
+	woodcutterNotalerted: scream * at woodcutter cabin -o dead redhood.
+}
+
+% Stage transfering rules
+qui * stage spawnStage -o stage mainStage.
+
+qui * stage mainStage * $fightToken C L -o stage fightStage.
+qui * stage fightStage -o stage mainStage.
+
+qui * stage mainStage * houseToken -o stage houseStage.
+qui * stage houseStage * $fightToken C L -o stage fightStage.
+
+
+% Contexts
+context init =
+{at redhood woods, at wolf woods, at woodcutter spawn, house granny granny_house, house mom mom_house, hasntVisited}.
+
+#trace _ spawnStage init.

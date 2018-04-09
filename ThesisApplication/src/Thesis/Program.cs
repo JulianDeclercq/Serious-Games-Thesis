@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Configuration;
 using System.Windows.Forms;
 
 namespace Thesis

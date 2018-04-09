@@ -1,0 +1,27 @@
+% Dog duck example
+
+dog : pred.
+duck : pred. 
+
+barks : pred.
+runs_away : pred.
+catches  : pred.
+escapes : pred.
+brickhouse : pred.
+strawhouse : pred.
+
+stage go = {
+  bark	: $dog * $duck -o barks. 
+  chase 1: $dog * barks * $duck -o runs_away.
+  % build_stick : pig * sticks -o stickhouse.
+  % build_brick : pig * bricks -o brickhouse.
+  % blow_straw : wolf * strawhouse -o wolf.
+  % blow_stick : wolf * stickhouse -o wolf.
+  % blow_brick : wolf * brickhouse -o brickhouse.
+}
+#interactive go.
+
+context init = {dog, duck}.
+% {pig, pig, pig, wolf, straw, sticks, bricks}. 
+
+#trace _ go init.
