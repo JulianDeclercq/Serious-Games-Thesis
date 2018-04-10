@@ -1,0 +1,10 @@
+state : type.
+on : state.
+off : state.
+
+switch : state -> type.
+
+sigtoggle : type.
+sigtoggled : type.
+t1 : switch on * sigtoggle -o {switch off * sigtoggled}.
+t2 : switch off * sigtoggle -o {switch on * sigtoggled}.

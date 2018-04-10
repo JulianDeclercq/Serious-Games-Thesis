@@ -1,0 +1,4 @@
+{"command": {"rulename": "runAway", "args": ["granny_house"]},
+ "removed": [{"varname": "x15", "mode": "lin", "pred": "at", "args": ["redhood", "granny_house"]}, {"varname": "x14", "mode": "lin", "pred": "visit", "args": ["redhood", "granny"]}, {"varname": "x13", "mode": "lin", "pred": "at", "args": ["wolf", "granny_house"]}],
+ "added": [{"varname": "x19", "mode": "lin", "pred": "at", "args": ["redhood", "woods"]}]
+}

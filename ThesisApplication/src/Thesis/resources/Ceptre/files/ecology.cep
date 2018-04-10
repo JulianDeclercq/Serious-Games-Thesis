@@ -1,0 +1,48 @@
+
+age : type.
+young : age.
+mature : age.
+old : age.
+
+hunger_level : type.
+hungry : hunger_level.
+sated : hunger_level.
+
+fox age hunger_level : pred.
+rabbit age : pred.
+
+stage sim = {
+
+fox_eat : fox FoxAge hungry *  rabbit RabbitAge -o fox FoxAge sated.
+
+fox_get_hungry : fox Age sated -o fox Age hungry.
+
+fox_reproduce :
+    $fox mature Hunger1 * $fox mature Hunger2 -o fox young hungry.
+
+fox_grow_mature: fox young sated -o fox mature hungry.
+
+fox_grow_old : fox mature sated -o fox old hungry.
+
+fox_die_old : fox old _ -o ().
+
+fox_die_hungry : fox Age hungry -o ().
+
+rabbit_reproduce : $rabbit mature * $rabbit mature -o rabbit young.
+
+rabbit_grow_mature : rabbit young -o rabbit mature.
+
+rabbit_grow_old : rabbit mature -o rabbit old.
+
+rabbit_die_old : rabbit old -o ().
+
+}
+% #interactive sim.
+
+context init = {
+  rabbit mature, rabbit mature, rabbit mature, rabbit mature,
+  fox young hungry, fox mature sated, fox mature sated 
+}.
+
+#trace _ sim init.
+

@@ -1,0 +1,18 @@
+--- STEP:    spawn_cabin woodcutter
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter cabin)}
+--- STEP:    `anon0 
+    REMOVED: {qui, (stage spawnStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    wolfEncounter 
+    REMOVED: {hasntVisited, (at wolf woods), (at redhood woods)}
+    ADDED:   {(at wolf granny_house), (at redhood woods), hasntVisited}
+--- STEP:    visit woods mom mom_house
+    REMOVED: {(at redhood woods), hasntVisited, (house mom mom_house)}
+    ADDED:   {houseToken, (at redhood mom_house), (visit redhood mom)}
+--- STEP:    `anon3 
+    REMOVED: {qui, houseToken, (stage mainStage)}
+    ADDED:   {(stage houseStage)}
+--- STEP:    mom_house 
+    REMOVED: {(visit redhood mom)}
+    ADDED:   {livedHappilyEverAfter}

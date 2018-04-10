@@ -1,0 +1,42 @@
+% Type declarations
+character : type.
+location : type.
+object : type.
+weapon : object.
+
+% Predicate declarations
+a : pred.
+b : pred.
+
+at character location : pred.
+likes character character : pred.
+anger character character : pred.
+has character object : pred.
+depressed character : pred.
+dead character : pred.
+
+do/compliment : $at C L * $at C' L * $likes C C' -o likes C' C.
+
+do/murder
+: anger C C' * anger C C' * anger C C' * anger C C' *
+  $at C L * at C' L * $has C weapon
+                -o !dead C'.
+
+do/mourn : $at C L * likes C C' * dead C' -o depressed C * depressed C.
+
+% Context declarations
+romeo: character.
+montague: character.
+capulet: character.
+mercutio: character.
+nurse: character.
+juliet: character.
+tybalt: character.
+apothecary: character.
+
+
+stage main = {
+  rule : a -o b.
+}
+
+#trace _ main {a,a,a}.
