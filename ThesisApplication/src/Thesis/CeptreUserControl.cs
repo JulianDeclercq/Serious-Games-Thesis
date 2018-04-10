@@ -13,9 +13,6 @@ namespace Thesis
     public partial class CeptreUserControl : UserControl
     {
         private WordNetEngine _wordNetEngine;
-        private SynSet _semSimSs1;
-        private SynSet _semSimSs2;
-        private WordNetSimilarityModel _semanticSimilarityModel;
         private DisplayForm _displayForm;
         private CeptreBridge _ceptreBridge = null;
 
@@ -37,44 +34,46 @@ namespace Thesis
         private void test_Click(object sender, EventArgs e)
         {
             Thread t = new Thread(new ThreadStart(delegate ()
-                {
-                    Invoke(new MethodInvoker(delegate () { Enabled = false; }));
+            {
+                Invoke(new MethodInvoker(delegate () { Enabled = false; }));
 
-                    // test all words
-                    Dictionary<WordNetEngine.POS, Set<string>> words = _wordNetEngine.AllWords;
-                    foreach (WordNetEngine.POS pos in words.Keys)
-                        foreach (string word in words[pos])
+                // test all words
+                Dictionary<WordNetEngine.POS, Set<string>> words = _wordNetEngine.AllWords;
+                foreach (WordNetEngine.POS pos in words.Keys)
+                    foreach (string word in words[pos])
+                    {
+                        // get synsets
+                        Set<SynSet> synsets = _wordNetEngine.GetSynSets(word, pos);
+                        if (synsets.Count == 0)
+                            if (
+                                MessageBox.Show("Failed to get synset for " + pos + ":  " + word + ". Quit?", "Quit?",
+                                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                return;
+
+                        // make sure there's a most common synset
+                        if (_wordNetEngine.GetMostCommonSynSet(word, pos) == null)
+                            throw new NullReferenceException("Failed to find most common synset");
+
+                        // check each synset
+                        foreach (SynSet synset in synsets)
                         {
-                            // get synsets
-                            Set<SynSet> synsets = _wordNetEngine.GetSynSets(word, pos);
-                            if (synsets.Count == 0)
-                                if (MessageBox.Show("Failed to get synset for " + pos + ":  " + word + ". Quit?", "Quit?", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                                    return;
+                            // check lexically related words
+                            synset.GetLexicallyRelatedWords();
 
-                            // make sure there's a most common synset
-                            if (_wordNetEngine.GetMostCommonSynSet(word, pos) == null)
-                                throw new NullReferenceException("Failed to find most common synset");
+                            // check relations
+                            foreach (WordNetEngine.SynSetRelation relation in synset.SemanticRelations)
+                                synset.GetRelatedSynSets(relation, false);
 
-                            // check each synset
-                            foreach (SynSet synset in synsets)
-                            {
-                                // check lexically related words
-                                synset.GetLexicallyRelatedWords();
-
-                                // check relations
-                                foreach (WordNetEngine.SynSetRelation relation in synset.SemanticRelations)
-                                    synset.GetRelatedSynSets(relation, false);
-
-                                // check lex file name
-                                if (synset.LexicographerFileName == WordNetEngine.LexicographerFileName.None)
-                                    throw new Exception("Invalid lex file name");
-                            }
+                            // check lex file name
+                            if (synset.LexicographerFileName == WordNetEngine.LexicographerFileName.None)
+                                throw new Exception("Invalid lex file name");
                         }
+                    }
 
-                    MessageBox.Show("Test completed. Everything looks okay.");
+                MessageBox.Show("Test completed. Everything looks okay.");
 
-                    Invoke(new MethodInvoker(delegate () { Enabled = true; }));
-                }));
+                Invoke(new MethodInvoker(delegate () { Enabled = true; }));
+            }));
 
             t.Start();
         }
@@ -101,13 +100,8 @@ namespace Thesis
             _ceptreBridge.StartCeptre("cur.cep");
         }
 
-        private void btnGenerateGraph_Click(object sender, EventArgs e)
+        private void btnShowGraph_Click(object sender, EventArgs e)
         {
-            string outputFileName = "graphOutput.png";
-
-            // Generate the graph
-            GraphLoader.GenerateGraph(outputFileName);
-
             // Show the generated graph
             // Specify the process
             // For some obscure reason, just running cmd.exe with the path as commandline argument didn't work..
@@ -127,13 +121,50 @@ namespace Thesis
             process.Start();
 
             // Open the generated file
-            process.StandardInput.WriteLine($@"{GraphLoader.GenerationPath()}\{outputFileName}");
+            string graphPath = $@"{GraphLoader.GenerationPath()}\{GraphLoader.LatestGeneratedFileName()}";
+            process.StandardInput.WriteLine(graphPath);
         }
 
-        private void Confirm_Click(object sender, EventArgs e)
+        private void btnConfirm_Click(object sender, EventArgs e)
         {
             // Confirm the user selection box and send it to the ceptre program
             _ceptreBridge?.SendUserInput(comboBoxUserInput.SelectedItem.ToString());
+        }
+
+        private void btnExportLogAndGraph_Click(object sender, EventArgs e)
+        {
+            // Show a save file dialog
+            string resourcesFolder = Path.GetFullPath(@"..\..\resources");
+
+            // Avoid using the annoying folder dialog by creating a dummy file
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                FileName = "dummy",
+                CheckFileExists = false,
+                InitialDirectory = $@"{resourcesFolder}\InterestingRuns"
+            };
+
+            // Show the dialog
+            var result = saveFileDialog.ShowDialog();
+
+            // Check if the result was ok, otherwise leave the method
+            if (result != DialogResult.OK)
+                return;
+
+            string savePath = Path.GetDirectoryName(saveFileDialog.FileName);
+
+            // Create a directory
+            Directory.CreateDirectory($@"{savePath}\{DateTime.UtcNow:yyyyMMddTHHmmss}");
+
+            // Copy the graph
+            string origin = $@"{resourcesFolder}\{GraphLoader.LatestGeneratedFileName()}";
+            string destination = $@"{savePath}\{GraphLoader.LatestGeneratedFileName()}";
+            File.Copy(origin, destination);
+
+            // Copy the log
+            origin = $@"{resourcesFolder}\Ceptre\log.txt";
+            destination = $@"{savePath}\log.txt";
+            File.Copy(origin, destination);
         }
     }
 }

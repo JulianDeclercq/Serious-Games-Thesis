@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 public class GraphLoader
 {
     private static string _resourcesFolder = Path.GetFullPath(@"..\..\resources");
+    private static string _latestGeneratedName = "";
 
     /// <summary>
     /// Generates a graph from the ceptre log and saves it in the streamingassets folder under given fileName.
@@ -14,6 +15,9 @@ public class GraphLoader
     /// <param name="outputFileName">Name of the graph to write</param>
     public static void GenerateGraph(string outputFileName)
     {
+        // Update the latest generated name
+        _latestGeneratedName = outputFileName;
+
         // Remove the extension, as it is added in formatting anyways
         if (outputFileName.EndsWith(".png"))
             outputFileName = outputFileName.Substring(0, outputFileName.Length - 4);
@@ -48,5 +52,10 @@ public class GraphLoader
     public static string GenerationPath()
     {
         return _resourcesFolder;
+    }
+
+    public static string LatestGeneratedFileName()
+    {
+        return _latestGeneratedName;
     }
 }

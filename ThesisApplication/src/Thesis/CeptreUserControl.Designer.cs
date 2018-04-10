@@ -39,8 +39,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.ExportLogAndGraph = new System.Windows.Forms.Button();
+            this.btnShowGraph = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -87,7 +87,7 @@
             this.Confirm.TabIndex = 15;
             this.Confirm.Text = "Confirm";
             this.Confirm.UseVisualStyleBackColor = true;
-            this.Confirm.Click += new System.EventHandler(this.Confirm_Click);
+            this.Confirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
             // comboBoxUserInput
             // 
@@ -167,8 +167,8 @@
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.button4);
-            this.groupBox4.Controls.Add(this.button3);
+            this.groupBox4.Controls.Add(this.ExportLogAndGraph);
+            this.groupBox4.Controls.Add(this.btnShowGraph);
             this.groupBox4.Controls.Add(this.button2);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(20, 411);
@@ -180,24 +180,26 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Ceptre";
             // 
-            // button4
+            // ExportLogAndGraph
             // 
-            this.button4.Location = new System.Drawing.Point(308, 46);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(257, 62);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Export log and graph";
-            this.button4.UseVisualStyleBackColor = true;
+            this.ExportLogAndGraph.Location = new System.Drawing.Point(308, 46);
+            this.ExportLogAndGraph.Name = "ExportLogAndGraph";
+            this.ExportLogAndGraph.Size = new System.Drawing.Size(257, 62);
+            this.ExportLogAndGraph.TabIndex = 13;
+            this.ExportLogAndGraph.Text = "Export log and graph";
+            this.ExportLogAndGraph.UseVisualStyleBackColor = true;
+            this.ExportLogAndGraph.Click += new System.EventHandler(this.btnExportLogAndGraph_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(17, 117);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(259, 62);
-            this.button3.TabIndex = 12;
-            this.button3.Text = "Generate Graph";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnGenerateGraph_Click);
+            this.btnShowGraph.Location = new System.Drawing.Point(17, 117);
+            this.btnShowGraph.Name = "button3";
+            this.btnShowGraph.Size = new System.Drawing.Size(259, 62);
+            this.btnShowGraph.TabIndex = 12;
+            this.btnShowGraph.Text = "Show Graph";
+            this.btnShowGraph.UseVisualStyleBackColor = true;
+            this.btnShowGraph.Click += new System.EventHandler(this.btnShowGraph_Click);
+            this.btnShowGraph.Enabled = false; //disable before a graph has been generated
             // 
             // button2
             // 
@@ -244,8 +246,8 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnShowGraph;
+        private System.Windows.Forms.Button ExportLogAndGraph;
         private System.Windows.Forms.ComboBox comboBoxUserInput;
         private System.Windows.Forms.Button Confirm;
     }

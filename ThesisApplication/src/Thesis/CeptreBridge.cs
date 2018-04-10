@@ -16,7 +16,7 @@ public class CeptreBridge
         _userInputComboBox = userInputComboBox;
     }
 
-    public void StartCeptre(string ceptreFile, string ceptreFolder = "files")
+    public void StartCeptre(string ceptreFile, string ceptreFolder = "files", bool generateGraph = true)
     {
         // Kill the ceptre process if it already existed
         if (_ceptreProcess != null && !_ceptreProcess.HasExited)
@@ -54,6 +54,15 @@ public class CeptreBridge
 
         // Interpret the input and output streams
         InterpretStreams();
+
+        // Generate the graph
+        if (generateGraph)
+        {
+            // Generate the graph
+            GraphLoader.GenerateGraph("graphOutput.png");
+
+            // Enable the show graph button
+        }
     }
 
     private void InterpretStreams()
