@@ -1,4 +1,4 @@
 {"command": {"rulename": "gets_lost", "args": ["redhood"]},
- "removed": [{"varname": "x12", "mode": "lin", "pred": "at", "args": ["redhood", "woods"]}, {"varname": "x11", "mode": "lin", "pred": "hasntVisited", "args": []}],
- "added": [{"varname": "x14", "mode": "lin", "pred": "hasntVisited", "args": []}]
+ "removed": [{"varname": "x14", "mode": "lin", "pred": "hasntVisited", "args": []}, {"varname": "x13", "mode": "lin", "pred": "at", "args": ["redhood", "woods"]}],
+ "added": [{"varname": "x15", "mode": "lin", "pred": "hasntVisited", "args": []}]
 }
