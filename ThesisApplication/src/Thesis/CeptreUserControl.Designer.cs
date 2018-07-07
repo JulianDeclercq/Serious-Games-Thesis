@@ -42,6 +42,7 @@
             this.ExportLogAndGraph = new System.Windows.Forms.Button();
             this.btnShowGraph = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -111,7 +112,7 @@
             this.groupBox2.Size = new System.Drawing.Size(376, 332);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Semantic relations";
+            this.groupBox2.Text = ".";
             // 
             // button1
             // 
@@ -119,7 +120,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(361, 39);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "WordNet";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -161,12 +162,13 @@
             this.groupBox3.Size = new System.Drawing.Size(376, 200);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Lexical relations";
+            this.groupBox3.Text = ".";
             // 
             // groupBox4
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.checkBox1);
             this.groupBox4.Controls.Add(this.ExportLogAndGraph);
             this.groupBox4.Controls.Add(this.btnShowGraph);
             this.groupBox4.Controls.Add(this.button2);
@@ -182,7 +184,7 @@
             // 
             // ExportLogAndGraph
             // 
-            this.ExportLogAndGraph.Location = new System.Drawing.Point(308, 46);
+            this.ExportLogAndGraph.Location = new System.Drawing.Point(310, 117);
             this.ExportLogAndGraph.Name = "ExportLogAndGraph";
             this.ExportLogAndGraph.Size = new System.Drawing.Size(257, 62);
             this.ExportLogAndGraph.TabIndex = 13;
@@ -190,16 +192,16 @@
             this.ExportLogAndGraph.UseVisualStyleBackColor = true;
             this.ExportLogAndGraph.Click += new System.EventHandler(this.btnExportLogAndGraph_Click);
             // 
-            // button3
+            // btnShowGraph
             // 
+            this.btnShowGraph.Enabled = false;
             this.btnShowGraph.Location = new System.Drawing.Point(17, 117);
-            this.btnShowGraph.Name = "button3";
+            this.btnShowGraph.Name = "btnShowGraph";
             this.btnShowGraph.Size = new System.Drawing.Size(259, 62);
             this.btnShowGraph.TabIndex = 12;
             this.btnShowGraph.Text = "Show Graph";
             this.btnShowGraph.UseVisualStyleBackColor = true;
             this.btnShowGraph.Click += new System.EventHandler(this.btnShowGraph_Click);
-            this.btnShowGraph.Enabled = false; //disable before a graph has been generated
             // 
             // button2
             // 
@@ -210,6 +212,17 @@
             this.button2.Text = "Run Ceptre";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnStartCeptre_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(362, 62);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(148, 33);
+            this.checkBox1.TabIndex = 1;
+            this.checkBox1.Text = "Interactive";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // CeptreUserControl
             // 
@@ -230,6 +243,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,6 +264,7 @@
         private System.Windows.Forms.Button ExportLogAndGraph;
         private System.Windows.Forms.ComboBox comboBoxUserInput;
         private System.Windows.Forms.Button Confirm;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

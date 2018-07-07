@@ -16,6 +16,8 @@ namespace Thesis
         private WordNetEngine _wordNetEngine;
         private DisplayForm _displayForm;
         private Process _ceptreProcess = null;
+        private string _allCeptreOutput = "";
+        private bool _interactive = false;
 
         public CeptreUserControl()
         {
@@ -92,7 +94,8 @@ namespace Thesis
         private void btnStartCeptre_Click(object sender, EventArgs e)
         {
             // Start ceptre
-            StartCeptre("cur.cep");
+            string fileToRun = _interactive ? "addedcommonsense_interactive.cep" : "addedcommonsense.cep";
+            StartCeptre(fileToRun);
         }
 
         private void btnShowGraph_Click(object sender, EventArgs e)
@@ -155,11 +158,13 @@ namespace Thesis
             string origin = $@"{resourcesFolder}\{GraphLoader.LatestGeneratedFileName()}";
             string destination = $@"{savePath}\{Path.GetFileName(saveFileDialog.FileName)}.png";
             File.Copy(origin, destination);
+            Console.WriteLine($"Wrote file: {destination}");
 
             // Copy the log
             origin = $@"{resourcesFolder}\Ceptre\log.txt";
             destination = $@"{savePath}\{Path.GetFileName(saveFileDialog.FileName)}.txt";
             File.Copy(origin, destination);
+            Console.WriteLine($"Wrote file: {destination}");
         }
 
         #region Ceptre control
@@ -222,6 +227,9 @@ namespace Thesis
             // Send the input to the stream
             _ceptreProcess.StandardInput.WriteLine(inputChoice);
 
+            // Log which choice the user has taken
+            _allCeptreOutput += $"User input: {userInput}{Environment.NewLine}";
+
             // Consume the line so the stream doesn't choke
             string lastLine = _ceptreProcess.StandardOutput.ReadLine();
 
@@ -232,7 +240,6 @@ namespace Thesis
         private void InterpretStreams()
         {
             // Read the output from the process
-            string output = "";
             List<string> lines = new List<string>();
 
             // Read until the end of the stream (== end of Ceptre process)
@@ -267,7 +274,7 @@ namespace Thesis
                 line += Environment.NewLine;
 
                 // Add the line to the output, print choice if it is not empty
-                output += line;
+                _allCeptreOutput += line;
                 lines.Add(line);
             }
 
@@ -275,10 +282,14 @@ namespace Thesis
                 Console.WriteLine("Ceptre finished running.");
 
             // Print the output
-            foreach (string line in lines)
-                Console.WriteLine(line);
+            Console.WriteLine(_allCeptreOutput);
         }
 
         #endregion
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            _interactive = ((CheckBox)sender).Checked;
+        }
     }
 }

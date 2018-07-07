@@ -1,0 +1,39 @@
+--- STEP:    spawn_cabin woodcutter
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter cabin)}
+--- STEP:    spawn_cabin wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf cabin)}
+--- STEP:    `anon0 
+    REMOVED: {qui, (stage spawnStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    eat cabin woodcutter
+    REMOVED: {(at wolf cabin), (at woodcutter cabin), hasntVisited}
+    ADDED:   {(dead woodcutter), (at wolf cabin), hasntVisited}
+--- STEP:    leaveHouseToWoods redhood
+    REMOVED: {(live redhood woods)}
+    ADDED:   {(at redhood woods)}
+--- STEP:    visitGranny woods
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {visitToken, (visit redhood granny), (at redhood granny_house)}
+--- STEP:    leaveHouseToWoods mom
+    REMOVED: {(live mom woods)}
+    ADDED:   {(at mom woods)}
+--- STEP:    offerCookies redhood
+    REMOVED: {(visit redhood granny), cookieToken}
+    ADDED:   {(offerCookies granny redhood), (visit redhood granny)}
+--- STEP:    eatCookies granny redhood
+    REMOVED: {(offerCookies granny redhood)}
+    ADDED:   {}
+--- STEP:    offerCookies redhood
+    REMOVED: {(visit redhood granny), cookieToken}
+    ADDED:   {(offerCookies granny redhood), (visit redhood granny)}
+--- STEP:    eatCookies granny redhood
+    REMOVED: {(offerCookies granny redhood)}
+    ADDED:   {}
+--- STEP:    `anon3 
+    REMOVED: {qui, visitToken, (stage mainStage)}
+    ADDED:   {(stage visitStage)}
+--- STEP:    grandma_no_wolf 
+    REMOVED: {(visit redhood granny), wolfNotEncountered}
+    ADDED:   {livedHappilyEverAfter}

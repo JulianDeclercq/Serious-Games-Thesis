@@ -1,0 +1,34 @@
+% Types
+character : type.
+location : type.
+
+% Predicates
+at character location : pred. 
+visit character character : pred.
+
+% Characters
+redhood : character.
+granny : character.
+woodcutter : character.
+
+% Locations
+woods : location.
+cabin : location.
+granny_house : location.
+
+
+visitToken character : pred.
+
+% Stages
+stage mainStage = {
+	% if character C has a visit token, he can visit any character. Visiting a character means going the the location of that character
+	visit: at C L * $at C' L' * visitToken C -o at C L'.
+}
+%#interactive mainStage.
+
+
+% Contexts
+context init =
+{visitToken redhood, visitToken redhood, visitToken redhood, at redhood woods, at woodcutter cabin, at granny granny_house}.
+
+#trace _ mainStage init.

@@ -1,0 +1,60 @@
+--- STEP:    spawn_woods woodcutter
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter woods)}
+--- STEP:    spawn_woods wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf woods)}
+--- STEP:    `anon0 
+    REMOVED: {qui, (stage spawnStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    eat woods woodcutter
+    REMOVED: {(at wolf woods), (at woodcutter woods), hasntVisited}
+    ADDED:   {(dead woodcutter), (at wolf woods), hasntVisited}
+--- STEP:    leaveHouseToWoods mom
+    REMOVED: {(live mom woods)}
+    ADDED:   {(at mom woods)}
+--- STEP:    howl mom
+    REMOVED: {(at mom woods), (at wolf woods), hasntVisited, howlToken}
+    ADDED:   {(howl wolf mom), (at mom woods), (at wolf woods), hasntVisited}
+--- STEP:    smell woods mom
+    REMOVED: {(at mom woods), (at wolf woods), hasntVisited, smellToken}
+    ADDED:   {(smell wolf mom), (at mom woods), (at wolf woods), hasntVisited}
+--- STEP:    wander_in_woods mom
+    REMOVED: {(at mom woods), hasntVisited}
+    ADDED:   {(at mom woods), hasntVisited}
+--- STEP:    cookTurnips 
+    REMOVED: {turnipToken}
+    ADDED:   {(cookTurnips granny)}
+--- STEP:    meet wolf mom
+    REMOVED: {(at mom woods), hasntVisited, (at wolf woods)}
+    ADDED:   {(meet wolf mom), (at mom woods), (at wolf woods), hasntVisited}
+--- STEP:    gets_lost mom
+    REMOVED: {(at mom woods), hasntVisited}
+    ADDED:   {hasntVisited}
+--- STEP:    gets_lost wolf
+    REMOVED: {hasntVisited, (at wolf woods)}
+    ADDED:   {hasntVisited}
+--- STEP:    leaveHouseToWoods redhood
+    REMOVED: {(live redhood woods)}
+    ADDED:   {(at redhood woods)}
+--- STEP:    visitGranny woods
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {visitToken, (visit redhood granny), (at redhood granny_house)}
+--- STEP:    offerCookies redhood
+    REMOVED: {(visit redhood granny), cookieToken}
+    ADDED:   {(offerCookies granny redhood), (visit redhood granny)}
+--- STEP:    offerCookies redhood
+    REMOVED: {(visit redhood granny), cookieToken}
+    ADDED:   {(offerCookies granny redhood), (visit redhood granny)}
+--- STEP:    eatCookies granny redhood
+    REMOVED: {(offerCookies granny redhood)}
+    ADDED:   {}
+--- STEP:    eatCookies granny redhood
+    REMOVED: {(offerCookies granny redhood)}
+    ADDED:   {}
+--- STEP:    `anon3 
+    REMOVED: {qui, visitToken, (stage mainStage)}
+    ADDED:   {(stage visitStage)}
+--- STEP:    grandma_no_wolf 
+    REMOVED: {(visit redhood granny), wolfNotEncountered}
+    ADDED:   {livedHappilyEverAfter}

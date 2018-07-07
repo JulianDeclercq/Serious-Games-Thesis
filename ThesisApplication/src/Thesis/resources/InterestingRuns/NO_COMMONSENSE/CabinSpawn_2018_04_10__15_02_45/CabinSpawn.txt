@@ -1,0 +1,33 @@
+--- STEP:    spawn_cabin wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf cabin)}
+--- STEP:    spawn_cabin woodcutter
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter cabin)}
+--- STEP:    `anon0 
+    REMOVED: {qui, (stage spawnStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    leaveHouseToWoods mom
+    REMOVED: {(live mom woods)}
+    ADDED:   {(at mom woods)}
+--- STEP:    wander_in_woods mom
+    REMOVED: {(at mom woods), hasntVisited}
+    ADDED:   {(at mom woods), hasntVisited}
+--- STEP:    eat cabin woodcutter
+    REMOVED: {hasntVisited, (at woodcutter cabin), (at wolf cabin)}
+    ADDED:   {(dead woodcutter), (at wolf cabin), hasntVisited}
+--- STEP:    leaveHouseToWoods redhood
+    REMOVED: {(live redhood woods)}
+    ADDED:   {(at redhood woods)}
+--- STEP:    wander_in_woods mom
+    REMOVED: {hasntVisited, (at mom woods)}
+    ADDED:   {(at mom woods), hasntVisited}
+--- STEP:    meet redhood mom
+    REMOVED: {(at mom woods), hasntVisited, (at redhood woods)}
+    ADDED:   {(meet redhood mom), (at mom woods), (at redhood woods), hasntVisited}
+--- STEP:    gets_lost mom
+    REMOVED: {(at mom woods), hasntVisited}
+    ADDED:   {hasntVisited}
+--- STEP:    gets_lost redhood
+    REMOVED: {hasntVisited, (at redhood woods)}
+    ADDED:   {hasntVisited}

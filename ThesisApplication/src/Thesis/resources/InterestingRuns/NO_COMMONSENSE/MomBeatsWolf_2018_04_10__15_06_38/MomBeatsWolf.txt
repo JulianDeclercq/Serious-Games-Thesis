@@ -1,0 +1,39 @@
+--- STEP:    spawn_woods woodcutter
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter woods)}
+--- STEP:    spawn_woods wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf woods)}
+--- STEP:    `anon0 
+    REMOVED: {qui, (stage spawnStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    gets_lost woodcutter
+    REMOVED: {(at woodcutter woods), hasntVisited}
+    ADDED:   {hasntVisited}
+--- STEP:    leaveHouseToWoods mom
+    REMOVED: {(live mom woods)}
+    ADDED:   {(at mom woods)}
+--- STEP:    fightWolf mom woods
+    REMOVED: {(at mom woods), hasntVisited, (at wolf woods)}
+    ADDED:   {(fightToken mom woods), hasntVisited}
+--- STEP:    leaveHouseToWoods redhood
+    REMOVED: {(live redhood woods)}
+    ADDED:   {(at redhood woods)}
+--- STEP:    visitGranny woods
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {visitToken, (visit redhood granny), (at redhood granny_house)}
+--- STEP:    `anon1 mom woods
+    REMOVED: {qui, (fightToken mom woods), (stage mainStage)}
+    ADDED:   {(stage fightStage), (fightToken mom woods)}
+--- STEP:    character_wins mom woods
+    REMOVED: {(fightToken mom woods)}
+    ADDED:   {(dead wolf), (at mom woods)}
+--- STEP:    `anon2 
+    REMOVED: {qui, (stage fightStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    `anon3 
+    REMOVED: {qui, (stage mainStage), visitToken}
+    ADDED:   {(stage visitStage)}
+--- STEP:    grandma_no_wolf 
+    REMOVED: {(visit redhood granny), wolfNotEncountered}
+    ADDED:   {livedHappilyEverAfter}

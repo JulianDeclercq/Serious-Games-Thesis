@@ -1,0 +1,57 @@
+--- STEP:    spawn_woods wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf woods)}
+--- STEP:    spawn_woods woodcutter
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter woods)}
+--- STEP:    `anon0 
+    REMOVED: {qui, (stage spawnStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    leaveHouseToWoods redhood
+    REMOVED: {(live redhood woods)}
+    ADDED:   {(at redhood woods)}
+--- STEP:    fightWolf woodcutter woods
+    REMOVED: {(at woodcutter woods), (at wolf woods), hasntVisited}
+    ADDED:   {(fightToken woodcutter woods), hasntVisited}
+--- STEP:    wander_in_woods redhood
+    REMOVED: {hasntVisited, (at redhood woods)}
+    ADDED:   {(at redhood woods), hasntVisited}
+--- STEP:    wander_in_woods redhood
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {(at redhood woods), hasntVisited}
+--- STEP:    wander_in_woods redhood
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {(at redhood woods), hasntVisited}
+--- STEP:    leaveHouseToWoods mom
+    REMOVED: {(live mom woods)}
+    ADDED:   {(at mom woods)}
+--- STEP:    wander_in_woods mom
+    REMOVED: {(at mom woods), hasntVisited}
+    ADDED:   {(at mom woods), hasntVisited}
+--- STEP:    meet mom redhood
+    REMOVED: {(at mom woods), hasntVisited, (at redhood woods)}
+    ADDED:   {(meet mom redhood), (at redhood woods), (at mom woods), hasntVisited}
+--- STEP:    meet redhood mom
+    REMOVED: {(at redhood woods), (at mom woods), hasntVisited}
+    ADDED:   {(meet redhood mom), (at mom woods), (at redhood woods), hasntVisited}
+--- STEP:    wander_in_woods redhood
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {(at redhood woods), hasntVisited}
+--- STEP:    gets_lost mom
+    REMOVED: {hasntVisited, (at mom woods)}
+    ADDED:   {hasntVisited}
+--- STEP:    gets_lost redhood
+    REMOVED: {hasntVisited, (at redhood woods)}
+    ADDED:   {hasntVisited}
+--- STEP:    `anon1 woodcutter woods
+    REMOVED: {qui, (fightToken woodcutter woods), (stage mainStage)}
+    ADDED:   {(stage fightStage), (fightToken woodcutter woods)}
+--- STEP:    wolf_wins woodcutter woods
+    REMOVED: {(fightToken woodcutter woods)}
+    ADDED:   {(dead woodcutter), (at wolf woods)}
+--- STEP:    `anon2 
+    REMOVED: {qui, (stage fightStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    gets_lost wolf
+    REMOVED: {(at wolf woods), hasntVisited}
+    ADDED:   {hasntVisited}

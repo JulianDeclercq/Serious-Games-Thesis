@@ -1,0 +1,22 @@
+Ceptre workarounds
+
+if a stage has to transfer after firing a particular rule:
+	add a PARTICULAR_RULE_TOKEN to the beginning of EVERY RULE in the stage.
+	only the PARTICULAR_RULE consumes the PARTICULAR_RULE_TOKEN.
+
+	Example: After the visit rule is executed, the stage has to end
+	stage mainStage = {
+	% From any location, redhood can visit any characters house
+	visit : hasntVisited * at redhood L * house C L' -o visit redhood C * at redhood L' * houseToken.
+
+	wolfEncounter : $hasntVisited * wolfNotEncountered * at wolf woods * $at redhood woods -o at wolf granny_house.
+	eat 			: $hasntVisited * $at wolf woods * at C woods -o dead C.
+	fightWolf 		: $hasntVisited * at C woods * at wolf woods -o fightToken C woods.
+	gets_lost 		: $hasntVisited * at C woods -o.
+	wander_in_woods : $hasntVisited * at C woods -o at C woods.}
+
+	Note the hasntVisited pred. a the start of all rules
+	Consuming this token with the visit rule makes sure the other rules can't be run, and thus forcing the stage into quiescense
+
+
+	CHECK IF L AND L' CAN BE THE SAME, THINK THEY CAN THO OTHERWISE IT WOULD BE AMAZE, SEEMS TO WORK!!!!

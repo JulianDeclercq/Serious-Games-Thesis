@@ -1,0 +1,33 @@
+--- STEP:    spawn_cabin woodcutter
+    REMOVED: {(at woodcutter spawn)}
+    ADDED:   {(at woodcutter cabin)}
+--- STEP:    spawn_woods wolf
+    REMOVED: {(at wolf spawn)}
+    ADDED:   {(at wolf woods)}
+--- STEP:    `anon0 
+    REMOVED: {qui, (stage spawnStage)}
+    ADDED:   {(stage mainStage)}
+--- STEP:    leaveHouseToWoods redhood
+    REMOVED: {(live redhood woods)}
+    ADDED:   {(at redhood woods)}
+--- STEP:    wolfEncounter 
+    REMOVED: {(at redhood woods), (at wolf woods), wolfNotEncountered, hasntVisited}
+    ADDED:   {(at wolf granny_house), (at redhood woods), hasntVisited}
+--- STEP:    wander_in_woods redhood
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {(at redhood woods), hasntVisited}
+--- STEP:    leaveHouseToWoods mom
+    REMOVED: {(live mom woods)}
+    ADDED:   {(at mom woods)}
+--- STEP:    meet redhood mom
+    REMOVED: {(at mom woods), (at redhood woods), hasntVisited}
+    ADDED:   {(meet redhood mom), (at mom woods), (at redhood woods), hasntVisited}
+--- STEP:    visitGranny woods
+    REMOVED: {(at redhood woods), hasntVisited}
+    ADDED:   {visitToken, (visit redhood granny), (at redhood granny_house)}
+--- STEP:    `anon3 
+    REMOVED: {qui, visitToken, (stage mainStage)}
+    ADDED:   {(stage visitStage)}
+--- STEP:    runAway granny_house
+    REMOVED: {(visit redhood granny), (at redhood granny_house), (at wolf granny_house)}
+    ADDED:   {(at redhood woods)}
