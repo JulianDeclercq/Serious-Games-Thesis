@@ -1,4 +1,4 @@
-{"command": {"rulename": "cutTree", "args": []},
- "removed": [{"varname": "x18", "mode": "lin", "pred": "at", "args": ["woodcutter", "woods"]}, {"varname": "x12", "mode": "lin", "pred": "cutTreeToken", "args": []}, {"varname": "x6", "mode": "lin", "pred": "hasntVisited", "args": []}],
- "added": [{"varname": "x23", "mode": "lin", "pred": "cutTree", "args": ["woodcutter"]}, {"varname": "x22", "mode": "lin", "pred": "at", "args": ["woodcutter", "woods"]}, {"varname": "x21", "mode": "lin", "pred": "hasntVisited", "args": []}]
+{"command": {"rulename": "cookTurnips", "args": []},
+ "removed": [{"varname": "x16", "mode": "lin", "pred": "turnipToken", "args": []}],
+ "added": [{"varname": "x47", "mode": "lin", "pred": "cookTurnips", "args": ["granny"]}]
 }
