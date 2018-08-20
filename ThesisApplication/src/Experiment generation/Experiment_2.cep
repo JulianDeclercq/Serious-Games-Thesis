@@ -1,0 +1,145 @@
+% Types
+character : type.
+location  : type.
+family    : type.
+weapon    : type.
+
+% Predicates
+at location character               : pred. % at L C can also be used to check if a character is alive, because a character has no location when it is dead
+fam character family                : pred.
+%friendship character character      : pred.
+dislike character character         : pred.
+like character character            : pred.
+love character character            : pred.
+neutral character character         : pred.
+dead character                      : pred.
+married character character         : pred.
+unmarried character                 : pred.
+drink character                     : pred.
+drunk character                     : pred.
+sober character                     : pred.
+sad character                       : pred.
+depressed character                 : pred.
+notDepressed character              : pred.
+mutualFriendsToken                  : pred.
+hostileFightToken character character      : pred. % Fight to kill
+friendlyFightToken character character     : pred. % Fight for fun
+
+% Tokens
+partyStarted : pred.
+
+% Characters
+romeo       : character.
+juliet      : character.
+tybalt      : character.
+friar       : character.
+mercutio    : character.
+
+% Locations
+spawn   : location.
+town    : location.
+chapel  : location.
+party   : location.
+home    : location.
+
+% Weapons
+knife   : weapon.
+sword   : weapon.
+
+% Family names
+montague:   family.
+capulet:    family. 
+
+% Stages
+stage spawnStage = {
+    % Spawn at a random location
+    spawn_town   : at spawn C -o at town C.
+    spawn_home   : at spawn C -o at home C.
+    spawn_chapel : at spawn C -o at chapel C.
+}
+
+stage mainStage = {
+% Developing interhuman relationships
+    % If two people meet (= being at the same location), they can either get angry with eachother or get along
+    developLikingFromNeutral: $at L C * $at L C' * neutral C C' -o like C C'.
+    developDislikingFromNeutral: $at L C * $at L C' * neutral C C' -o dislike C C'.
+
+    % A friend can introduce a character to one of their own friends to make new friends (influenced by agreeableness)
+    introduceTo: mutualFriendsToken * $like C C' * $like C' C'' -o like C C''.
+
+    % If people that like each other a lot meet at a party, they can fall in love
+    fallInLove: partyStarted * $at L C * $at L C' * like C C' -o love C C'.
+    fallInLove: $at L C * $at L C' * like C C' -o love C C'.
+
+    % If someone dislikes them, they can get sad (Influenced by extraversion)
+    % getSadBecauseDislike: $notDepressed C' * $at L C * $at L C' * $dislike C C' -o sad C'.
+
+    % If one of their friends is at the party and they are not, they can get sad (Influenced by extraversion)
+    % getSadBecauseFriendAtParty: $notDepressed C * $at home C * $at party C' * $like C C' -o sad C'.
+
+    % If someone is very sad, they can get depressed.
+    % getDepressed: $at L C * sad C * sad C * sad C * notDepressed C -o depressed C.
+
+    % If someone is depressed, they become suicidal and fight themselves (guaranteed loss)
+    % becomesSuicidal: $at L C * $depressed C -o hostileFightToken C C.
+
+    % If people are in love and unmarried they can go to the chapel
+    inLoveToChapel: $love C C' * at party C * at party C' * $unmarried C * $unmarried C' -o at chapel C * at chapel C'. 
+    inLoveToChapel: $love C C' * at town C * at town C' * $unmarried C * $unmarried C' -o at chapel C * at chapel C'. 
+
+    % Two drunk people can reconsider bad feelings towards eachother
+    reconsiderDislikeToLike: $drunk C * $drunk C' * dislike C C' * at L C * at L C' -o like C C'.
+
+    % Two drunk people that like eachother can kiss eachother
+    drunkKiss: $at L C * $drunk C * $drunk C' * $like C C' -o.
+
+    % Marry
+    marry: $at chapel friar * at chapel C * at chapel C' * $love C C' * unmarried C * unmarried C' -o married C C' * married C' C * at town C * at town C'.
+
+% Drinking
+    % Go to the party if it has started
+    % toParty: $partyStarted * at town C -o at party C.
+    % toParty: $partyStarted * at home C -o at party C.
+
+    % An unmarried character at a party can drink (influenced by Openness to experience)
+    % drink: $at party C * $unmarried C * $sober C -o drink C.
+
+    % Too much drinking results in being drunk (sobriety is consumed)
+    gotDrunk: $at party C * $drink C * $drink C * $drink C * sober C -o drunk C. 
+
+    % When someone gets drunk, consume the partyStarted token so no one can join the party anymore, to force the story to progress
+    partyFull: partyStarted * $drunk C -o.
+
+% Fighting
+    % If people that dislike each other a lot meet at a party, they can start fighting
+    drunkFightAtParty: $at party C * $at party C' * $drunk C * $dislike C C' -o hostileFightToken C C'.
+
+    % Two drunken friends can start a friendly fight, they get a little more sober after
+    drunkFriendlyFightAtParty: $at party C * $at party C' * like C C' * drunk C * drunk C' * drink C * drink C' -o friendlyFightToken C C'.
+
+    % A friend can defend another friend that is in a fight.
+    defendFriend: hostileFightToken C C' * $like C C'' -o hostileFightToken C' C''.
+
+    % Hostile: dying happens through consuming the location
+    hostileFightWin: hostileFightToken C C' * at L C' -o.
+    hostilefightLoss: hostileFightToken C C' * at L C -o.
+
+    % Friendly: no one dies and both characters get more sober (remove drunk and a drink, + add sobriety)
+    % Two times the same rule to show in output who won
+    friendlyFightWin: friendlyFightToken C C' * drunk C * drunk C' * drink C * drink C' -o sober C * sober C'.
+    friendlyFightLoss: friendlyFightToken C C' * drunk C * drunk C' * drink C * drink C' -o sober C * sober C'.
+}
+
+% Stage transferring rules
+qui * stage spawnStage -o stage mainStage.
+
+% Contexts
+context init =
+{unmarried romeo, unmarried juliet, unmarried tybalt, unmarried mercutio, unmarried friar,
+notDepressed romeo, notDepressed juliet, notDepressed tybalt, notDepressed mercutio, notDepressed friar,
+sober romeo, sober juliet, sober tybalt, sober mercutio, sober friar,
+at spawn romeo, at spawn juliet, at spawn tybalt, at town mercutio, at chapel friar,
+like romeo mercutio, neutral romeo juliet, dislike romeo tybalt, dislike mercutio tybalt,
+partyStarted, mutualFriendsToken, mutualFriendsToken}.
+
+#trace _ spawnStage init.

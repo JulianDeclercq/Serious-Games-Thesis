@@ -1,0 +1,145 @@
+% Types
+character : type.
+location : type.
+
+% Predicates
+at character location 				: pred. 
+visit character character 			: pred.
+meet character character 			: pred.
+dead character 						: pred.
+fightToken character location		: pred.
+live character location 			: pred.
+
+visitToken 							: pred.
+livedHappilyEverAfter 				: pred.
+endstageToken						: pred.
+runAway								: pred.
+scream								: pred.
+interrogate							: pred.
+hasntVisited						: pred.
+wolfNotEncountered					: pred. % Did I just find a way to check smth negative? :o
+
+% Characters
+mom  		: character.
+wolf		: character.
+granny	 	: character.
+redhood 	: character.
+woodcutter  : character.
+
+% Locations
+spawn : location.
+woods : location.
+cabin : location.
+granny_house : location.
+
+% CONCEPTNET
+smell character character : pred.
+smellToken : pred.
+
+howl character character : pred.
+howlToken : pred.
+
+cutTree character : pred.
+cutTreeToken : pred.
+
+offerCookies character character : pred.
+cookieToken : pred.
+
+cookTurnips character : pred.
+turnipToken : pred.
+
+% Stages
+stage spawnStage = {
+	% Spawn at a random location
+	spawn_woods : at C spawn -o at C woods.
+	spawn_cabin : at C spawn -o at C cabin.
+}
+
+stage mainStage = {
+	% The wolf can howl at a character if he is in the woods
+	howl : $hasntVisited * $at wolf woods * $at C woods * howlToken -o howl wolf C.
+
+	% The wolf can smell a human
+	smell : $hasntVisited * $at wolf L * $at C L * smellToken -o smell wolf C.
+
+	% If the woodcutter is in the woods, he can cut a tree
+	cutTree : $hasntVisited * $at woodcutter woods * cutTreeToken -o cutTree woodcutter.
+
+	% If someone visits granny, she can offer cookies
+	offerCookies : $visit C granny * cookieToken -o offerCookies granny C.
+
+	% If cookies were offered, they can be eaten
+	eatCookies : offerCookies C C' -o.
+
+	% Granny can cook turnips
+	cookTurnips : turnipToken -o cookTurnips granny.
+
+	% Leave the house and go to the woods
+	leaveHouseToWoods : live C woods -o at C woods.
+
+	% If the wolf meets redhood, he knows she is heading for grannies house
+	wolfEncounter : $hasntVisited * wolfNotEncountered * at wolf woods * $at redhood woods -o visit wolf granny * at wolf granny_house.
+
+	% Any character can meet any character if they are in the same place
+	meet : $hasntVisited * $at C woods * $at C' woods -o meet C C'.
+
+	% From any location, redhood can visit granny
+	visitGranny : hasntVisited * at redhood L -o at redhood granny_house * visit redhood granny * visitToken.
+
+	% Wolf can eat anyone that is in the same location
+	eat : $hasntVisited * $at wolf L * at C L -o dead C.
+
+	% Anyone that is in the woods has the possibility to fight the wolf
+	fightWolf : $hasntVisited * at C L * at wolf L -o fightToken C L.
+
+	% Possibility to get lost in the woods
+	gets_lost : $hasntVisited * at C woods -o.
+	
+	% Possibility to wander around in the woods
+	wander_in_woods : $hasntVisited * at C woods -o at C woods.
+}
+%#interactive mainStage.
+
+stage fightStage = {
+	wolf_wins :			fightToken C L -o at wolf L * dead C.
+	character_wins :  	fightToken C L -o at C L * dead wolf.
+}
+
+stage visitStage = {
+	% If someone visits granny, she can offer cookies
+	offerCookies : $visit C granny * cookieToken -o offerCookies granny C.
+
+	% If cookies were offered, they can be eaten
+	eatCookies : offerCookies C C' -o.
+
+	% Visit grandma when wolf doesn't know about whereabouts bc he hasn't encountered redhood
+	grandma_no_wolf :   visit redhood granny * wolfNotEncountered -o livedHappilyEverAfter.
+	
+	% Consume the visit token and scream
+	scream :	 		visit redhood granny * at wolf granny_house -o scream.
+
+	% Consume the visit token and redhoods location, run away to the woods
+	runAway :			visit redhood granny * at wolf granny_house * at redhood L -o at redhood woods.
+
+	% Woodcutter heard scream
+	woodcutterAlerted : scream * at woodcutter woods -o at woodcutter granny_house * fightToken woodcutter granny_house.
+
+	% Woodcutter didn't hear scream, because he was in the cabin
+	woodcutterNotalerted: scream * at woodcutter cabin -o dead redhood.
+}
+
+% Stage transfering rules
+qui * stage spawnStage -o stage mainStage.
+
+qui * stage mainStage * $fightToken C L -o stage fightStage.
+qui * stage fightStage -o stage mainStage.
+
+qui * stage mainStage * visitToken -o stage visitStage.
+qui * stage visitStage * $fightToken C L -o stage fightStage.
+
+
+% Contexts
+context init = 
+{live redhood woods, live mom woods, live granny granny_house, at woodcutter spawn, at wolf spawn, hasntVisited, wolfNotEncountered, smellToken, smellToken, howlToken, howlToken, cutTreeToken, cutTreeToken, cookieToken, cookieToken, turnipToken}.
+
+#trace _ spawnStage init.
