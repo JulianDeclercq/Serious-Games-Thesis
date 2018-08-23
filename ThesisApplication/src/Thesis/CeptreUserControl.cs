@@ -94,7 +94,8 @@ namespace Thesis
         private void btnStartCeptre_Click(object sender, EventArgs e)
         {
             // Start ceptre
-            string fileToRun = _interactive ? "addedcommonsense_interactive.cep" : "addedcommonsense.cep";
+            //string fileToRun = _interactive ? "addedcommonsense_interactive.cep" : "addedcommonsense.cep";
+            string fileToRun = _interactive ? "RomeoAndJuliet_interactive.cep" : "RomeoAndJuliet.cep";
             StartCeptre(fileToRun);
         }
 

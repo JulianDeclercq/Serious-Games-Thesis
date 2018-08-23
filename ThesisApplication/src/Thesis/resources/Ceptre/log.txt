@@ -1,57 +1,48 @@
---- STEP:    spawn_woods wolf
-    REMOVED: {(at wolf spawn)}
-    ADDED:   {(at wolf woods)}
---- STEP:    spawn_woods woodcutter
-    REMOVED: {(at woodcutter spawn)}
-    ADDED:   {(at woodcutter woods)}
+--- STEP:    spawn_chapel juliet
+    REMOVED: {(at spawn juliet)}
+    ADDED:   {(at chapel juliet)}
+--- STEP:    spawn_town tybalt
+    REMOVED: {(at spawn tybalt)}
+    ADDED:   {(at town tybalt)}
+--- STEP:    spawn_chapel romeo
+    REMOVED: {(at spawn romeo)}
+    ADDED:   {(at chapel romeo)}
 --- STEP:    `anon0 
     REMOVED: {qui, (stage spawnStage)}
     ADDED:   {(stage mainStage)}
---- STEP:    eat woods woodcutter
-    REMOVED: {(at woodcutter woods), (at wolf woods), hasntVisited}
-    ADDED:   {(dead woodcutter), (at wolf woods), hasntVisited}
---- STEP:    wander_in_woods wolf
-    REMOVED: {(at wolf woods), hasntVisited}
-    ADDED:   {(at wolf woods), hasntVisited}
---- STEP:    wander_in_woods wolf
-    REMOVED: {(at wolf woods), hasntVisited}
-    ADDED:   {(at wolf woods), hasntVisited}
---- STEP:    wander_in_woods wolf
-    REMOVED: {(at wolf woods), hasntVisited}
-    ADDED:   {(at wolf woods), hasntVisited}
---- STEP:    wander_in_woods wolf
-    REMOVED: {(at wolf woods), hasntVisited}
-    ADDED:   {(at wolf woods), hasntVisited}
---- STEP:    wander_in_woods wolf
-    REMOVED: {(at wolf woods), hasntVisited}
-    ADDED:   {(at wolf woods), hasntVisited}
---- STEP:    gets_lost wolf
-    REMOVED: {(at wolf woods), hasntVisited}
-    ADDED:   {hasntVisited}
---- STEP:    leaveHouseToWoods mom
-    REMOVED: {(live mom woods)}
-    ADDED:   {(at mom woods)}
---- STEP:    wander_in_woods mom
-    REMOVED: {(at mom woods), hasntVisited}
-    ADDED:   {(at mom woods), hasntVisited}
---- STEP:    gets_lost mom
-    REMOVED: {(at mom woods), hasntVisited}
-    ADDED:   {hasntVisited}
---- STEP:    leaveHouseToWoods redhood
-    REMOVED: {(live redhood woods)}
-    ADDED:   {(at redhood woods)}
---- STEP:    wander_in_woods redhood
-    REMOVED: {(at redhood woods), hasntVisited}
-    ADDED:   {(at redhood woods), hasntVisited}
---- STEP:    wander_in_woods redhood
-    REMOVED: {(at redhood woods), hasntVisited}
-    ADDED:   {(at redhood woods), hasntVisited}
---- STEP:    wander_in_woods redhood
-    REMOVED: {(at redhood woods), hasntVisited}
-    ADDED:   {(at redhood woods), hasntVisited}
---- STEP:    gets_lost redhood
-    REMOVED: {(at redhood woods), hasntVisited}
-    ADDED:   {hasntVisited}
---- STEP:    cookTurnips 
-    REMOVED: {turnipToken}
-    ADDED:   {(cookTurnips granny)}
+--- STEP:    toParty tybalt
+    REMOVED: {(at town tybalt), partyStarted}
+    ADDED:   {(at party tybalt), partyStarted}
+--- STEP:    toParty mercutio
+    REMOVED: {partyStarted, (at town mercutio)}
+    ADDED:   {(at party mercutio), partyStarted}
+--- STEP:    developLikingFromNeutral chapel romeo juliet
+    REMOVED: {(at chapel romeo), (at chapel juliet), (neutral romeo juliet)}
+    ADDED:   {(like romeo juliet), (at chapel juliet), (at chapel romeo)}
+--- STEP:    drink tybalt
+    REMOVED: {(at party tybalt), (sober tybalt), (unmarried tybalt)}
+    ADDED:   {(drink tybalt), (sober tybalt), (unmarried tybalt), (at party tybalt)}
+--- STEP:    drink mercutio
+    REMOVED: {(at party mercutio), (sober mercutio), (unmarried mercutio)}
+    ADDED:   {(drink mercutio), (sober mercutio), (unmarried mercutio), (at party mercutio)}
+--- STEP:    drink tybalt
+    REMOVED: {(sober tybalt), (unmarried tybalt), (at party tybalt)}
+    ADDED:   {(drink tybalt), (sober tybalt), (unmarried tybalt), (at party tybalt)}
+--- STEP:    drink mercutio
+    REMOVED: {(sober mercutio), (unmarried mercutio), (at party mercutio)}
+    ADDED:   {(drink mercutio), (sober mercutio), (unmarried mercutio), (at party mercutio)}
+--- STEP:    drink tybalt
+    REMOVED: {(sober tybalt), (unmarried tybalt), (at party tybalt)}
+    ADDED:   {(drink tybalt), (sober tybalt), (unmarried tybalt), (at party tybalt)}
+--- STEP:    gotDrunk tybalt
+    REMOVED: {(drink tybalt), (sober tybalt), (at party tybalt), (drink tybalt), (drink tybalt)}
+    ADDED:   {(drunk tybalt), (drink tybalt), (drink tybalt), (drink tybalt), (at party tybalt)}
+--- STEP:    partyFull tybalt
+    REMOVED: {(drunk tybalt), partyStarted}
+    ADDED:   {(drunk tybalt)}
+--- STEP:    drink mercutio
+    REMOVED: {(sober mercutio), (unmarried mercutio), (at party mercutio)}
+    ADDED:   {(drink mercutio), (sober mercutio), (unmarried mercutio), (at party mercutio)}
+--- STEP:    gotDrunk mercutio
+    REMOVED: {(drink mercutio), (sober mercutio), (at party mercutio), (drink mercutio), (drink mercutio)}
+    ADDED:   {(drunk mercutio), (drink mercutio), (drink mercutio), (drink mercutio), (at party mercutio)}

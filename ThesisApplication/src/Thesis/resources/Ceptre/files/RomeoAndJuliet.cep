@@ -129,7 +129,6 @@ stage mainStage = {
     friendlyFightWin: friendlyFightToken C C' * drunk C * drunk C' * drink C * drink C' -o sober C * sober C'.
     friendlyFightLoss: friendlyFightToken C C' * drunk C * drunk C' * drink C * drink C' -o sober C * sober C'.
 }
-#interactive mainStage.
 
 % Stage transferring rules
 qui * stage spawnStage -o stage mainStage.

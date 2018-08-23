@@ -1,4 +1,4 @@
-{"command": {"rulename": "cookTurnips", "args": []},
- "removed": [{"varname": "x16", "mode": "lin", "pred": "turnipToken", "args": []}],
- "added": [{"varname": "x47", "mode": "lin", "pred": "cookTurnips", "args": ["granny"]}]
+{"command": {"rulename": "gotDrunk", "args": ["mercutio"]},
+ "removed": [{"varname": "x69", "mode": "lin", "pred": "drink", "args": ["mercutio"]}, {"varname": "x68", "mode": "lin", "pred": "sober", "args": ["mercutio"]}, {"varname": "x66", "mode": "lin", "pred": "at", "args": ["party", "mercutio"]}, {"varname": "x55", "mode": "lin", "pred": "drink", "args": ["mercutio"]}, {"varname": "x47", "mode": "lin", "pred": "drink", "args": ["mercutio"]}],
+ "added": [{"varname": "x74", "mode": "lin", "pred": "drunk", "args": ["mercutio"]}, {"varname": "x73", "mode": "lin", "pred": "drink", "args": ["mercutio"]}, {"varname": "x72", "mode": "lin", "pred": "drink", "args": ["mercutio"]}, {"varname": "x71", "mode": "lin", "pred": "drink", "args": ["mercutio"]}, {"varname": "x70", "mode": "lin", "pred": "at", "args": ["party", "mercutio"]}]
 }
